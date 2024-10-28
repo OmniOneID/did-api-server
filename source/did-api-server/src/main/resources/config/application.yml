@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: API Gateway
+  profiles:
+    default: sample
+    group:
+      dev:
+        - logging
+        - spring-docs
+
+server:
+  port: 8093
+
