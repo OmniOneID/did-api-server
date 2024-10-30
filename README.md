@@ -39,33 +39,34 @@ did-api-server
         └── src
         └── build.gradle
         └── README.md
+        └── README_ko.md
 ```
 
 <br/>
 
 Below is a description of each folder and file in the directory:
 
-| Name                    | Description                                     |
-| ----------------------- | ----------------------------------------------- |
-| CHANGELOG.md            | Version-specific changes in the project         |
-| CODE_OF_CONDUCT.md      | Code of conduct for contributors                |
-| CONTRIBUTING.md         | Contribution guidelines and procedures          |
-| LICENSE                 | License                                         |
-| dependencies-license.md | Licenses for the project’s dependency libraries |
-| MAINTAINERS.md          | Guidelines for project maintainers              |
-| RELEASE-PROCESS.md      | Procedures for releasing new versions           |
-| SECURITY.md             | Security policies and vulnerability reporting   |
-| docs                    | Documentation                                   |
-| ┖ api                   | API guide documentation                         |
-| ┖ errorCode             | Error codes and troubleshooting guides          |
-| ┖ installation          | Installation and setup instructions             |
-| source                  | Server source code project                      |
-| ┖ did-api-server            | API Gateway Server source code and build files  |
-| &nbsp;&nbsp;&nbsp;┖ gradle              | Gradle build configurations and scripts         |
-| &nbsp;&nbsp;&nbsp;┖ libs                | External libraries and dependencies             |
-| &nbsp;&nbsp;&nbsp;┖ src                 | Main source code directory                      |
-| &nbsp;&nbsp;&nbsp;┖ build.gradle        | Gradle build configuration file                 |
-| &nbsp;&nbsp;&nbsp;┖ README.md           | Overview and instructions for the source code   |
+| Name                             | Description                                     |
+| -------------------------------- | ----------------------------------------------- |
+| CHANGELOG.md                     | Version-specific changes in the project         |
+| CODE_OF_CONDUCT.md               | Code of conduct for contributors                |
+| CONTRIBUTING.md                  | Contribution guidelines and procedures          |
+| LICENSE                          | License                                         |
+| dependencies-license.md          | Licenses for the project’s dependency libraries |
+| MAINTAINERS.md                   | Guidelines for project maintainers              |
+| RELEASE-PROCESS.md               | Procedures for releasing new versions           |
+| SECURITY.md                      | Security policies and vulnerability reporting   |
+| docs                             | Documentation                                   |
+| ┖ api                            | API guide documentation                         |
+| ┖ errorCode                      | Error codes and troubleshooting guides          |
+| ┖ installation                   | Installation and setup instructions             |
+| source                           | Server source code project                      |
+| ┖ did-api-server                 | API Gateway Server source code and build files  |
+| &nbsp;&nbsp;&nbsp;┖ gradle       | Gradle build configurations and scripts         |
+| &nbsp;&nbsp;&nbsp;┖ libs         | External libraries and dependencies             |
+| &nbsp;&nbsp;&nbsp;┖ src          | Main source code directory                      |
+| &nbsp;&nbsp;&nbsp;┖ build.gradle | Gradle build configuration file                 |
+| &nbsp;&nbsp;&nbsp;┖ README.md    | Overview and instructions for the source code   |
 
 <br/>
 
