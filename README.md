@@ -27,7 +27,7 @@ did-api-server
 │   └── installation
 │       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
 └── source
-    └── apigateway
+    └── did-api-server
         ├── gradle
         ├── libs
             └── did-sdk-common-1.0.0.jar
@@ -39,33 +39,34 @@ did-api-server
         └── src
         └── build.gradle
         └── README.md
+        └── README_ko.md
 ```
 
 <br/>
 
 Below is a description of each folder and file in the directory:
 
-| Name                    | Description                                     |
-| ----------------------- | ----------------------------------------------- |
-| CHANGELOG.md            | Version-specific changes in the project         |
-| CODE_OF_CONDUCT.md      | Code of conduct for contributors                |
-| CONTRIBUTING.md         | Contribution guidelines and procedures          |
-| LICENSE                 | License                                         |
-| dependencies-license.md | Licenses for the project’s dependency libraries |
-| MAINTAINERS.md          | Guidelines for project maintainers              |
-| RELEASE-PROCESS.md      | Procedures for releasing new versions           |
-| SECURITY.md             | Security policies and vulnerability reporting   |
-| docs                    | Documentation                                   |
-| ┖ api                   | API guide documentation                         |
-| ┖ errorCode             | Error codes and troubleshooting guides          |
-| ┖ installation          | Installation and setup instructions             |
-| source                  | Server source code project                      |
-| ┖ apigateway            | API Gateway Server source code and build files  |
-|   ┖ gradle              | Gradle build configurations and scripts         |
-|   ┖ libs                | External libraries and dependencies             |
-|   ┖ src                 | Main source code directory                      |
-|   ┖ build.gradle        | Gradle build configuration file                 |
-|   ┖ README.md           | Overview and instructions for the source code   |
+| Name                             | Description                                     |
+| -------------------------------- | ----------------------------------------------- |
+| CHANGELOG.md                     | Version-specific changes in the project         |
+| CODE_OF_CONDUCT.md               | Code of conduct for contributors                |
+| CONTRIBUTING.md                  | Contribution guidelines and procedures          |
+| LICENSE                          | License                                         |
+| dependencies-license.md          | Licenses for the project’s dependency libraries |
+| MAINTAINERS.md                   | Guidelines for project maintainers              |
+| RELEASE-PROCESS.md               | Procedures for releasing new versions           |
+| SECURITY.md                      | Security policies and vulnerability reporting   |
+| docs                             | Documentation                                   |
+| ┖ api                            | API guide documentation                         |
+| ┖ errorCode                      | Error codes and troubleshooting guides          |
+| ┖ installation                   | Installation and setup instructions             |
+| source                           | Server source code project                      |
+| ┖ did-api-server                 | API Gateway Server source code and build files  |
+| &nbsp;&nbsp;&nbsp;┖ gradle       | Gradle build configurations and scripts         |
+| &nbsp;&nbsp;&nbsp;┖ libs         | External libraries and dependencies             |
+| &nbsp;&nbsp;&nbsp;┖ src          | Main source code directory                      |
+| &nbsp;&nbsp;&nbsp;┖ build.gradle | Gradle build configuration file                 |
+| &nbsp;&nbsp;&nbsp;┖ README.md    | Overview and instructions for the source code   |
 
 <br/>
 
@@ -74,7 +75,7 @@ Below is a description of each folder and file in the directory:
 
 Libraries used in this project are organized into two main categories:
 
-1. **Open DID Libraries**: These libraries are developed by the Open DID project and are available in the [libs folder](source/apigateway/libs). They include:
+1. **Open DID Libraries**: These libraries are developed by the Open DID project and are available in the [libs folder](source/did-api-server/libs). They include:
 
    - `did-sdk-common-1.0.0.jar`
    - `did-blockchain-sdk-server-1.0.0.jar`
@@ -83,7 +84,7 @@ Libraries used in this project are organized into two main categories:
    - `did-datamodel-sdk-server-1.0.0.jar`
    - `did-wallet-sdk-server-1.0.0.jar`
 
-2. **Third-Party Libraries**: These libraries are open-source dependencies managed via the [build.gradle](source/apigateway/build.gradle) file. For a detailed list of third-party libraries and their licenses, please refer to the [LICENSE-dependencies.md](LICENSE-dependencies.md) file.
+2. **Third-Party Libraries**: These libraries are open-source dependencies managed via the [build.gradle](source/did-api-server/build.gradle) file. For a detailed list of third-party libraries and their licenses, please refer to the [dependencies-license.md](dependencies-license.md) file.
 
 ## Installation And Operation Guide
 
