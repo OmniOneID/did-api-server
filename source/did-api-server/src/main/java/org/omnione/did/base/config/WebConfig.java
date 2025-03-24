@@ -20,6 +20,6 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationPropertiesScan("org.omnione.did.apigateway.v1")
+@ConfigurationPropertiesScan("org.omnione.did.base.property")
 public class WebConfig {
 }

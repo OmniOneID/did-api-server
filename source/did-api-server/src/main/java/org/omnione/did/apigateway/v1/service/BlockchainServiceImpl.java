@@ -16,17 +16,20 @@
 
 package org.omnione.did.apigateway.v1.service;
 
+import org.omnione.did.ContractApi;
+import org.omnione.did.ContractFactory;
 import org.omnione.did.apigateway.v1.dto.DidDocResDto;
 import org.omnione.did.apigateway.v1.dto.VcMetaResDto;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
-import org.omnione.did.base.util.BaseBlockChainUtil;
+import org.omnione.did.base.property.BlockchainProperty;
 import org.omnione.did.base.util.BaseMultibaseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.common.util.DidValidator;
 import org.omnione.did.data.model.did.DidDocAndStatus;
 import org.omnione.did.data.model.vc.VcMeta;
+import org.omnione.exception.BlockChainException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +46,30 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class BlockchainServiceImpl implements StorageService {
 
+    private ContractApi contractApiInstance = null;
+
+    private final BlockchainProperty blockchainProperty;
+
+    /**
+     * Initializes the blockchain connection.
+     *
+     * @return a ContractApi instance.
+     */
+    public ContractApi initBlockChain() {
+        return ContractFactory.FABRIC.create(blockchainProperty.getFilePath());
+    }
+
+    public ContractApi getContractApiInstance() {
+        if (contractApiInstance == null) {
+            synchronized (BlockchainServiceImpl.class) {
+                if (contractApiInstance == null) {
+                    contractApiInstance = initBlockChain();
+                }
+            }
+        }
+        return contractApiInstance;
+    }
+
     /**
      * Retrieves a DID document for a given DID from the blockchain.
      *
@@ -55,7 +82,8 @@ public class BlockchainServiceImpl implements StorageService {
         checkValidation(didKeyUrl);
 
         try {
-            DidDocAndStatus didDocAndStatus = BaseBlockChainUtil.findDidDocument(didKeyUrl);
+            ContractApi contractApi = getContractApiInstance();
+            DidDocAndStatus didDocAndStatus = (DidDocAndStatus) contractApi.getDidDoc(didKeyUrl);
 
             if (didDocAndStatus == null) {
                 throw new OpenDidException(ErrorCode.DID_NOT_FOUND);
@@ -69,7 +97,10 @@ public class BlockchainServiceImpl implements StorageService {
                     .build();
         } catch (OpenDidException e) {
             log.error("Failed to find DID Document: " + e.getMessage());
-            throw e;
+            throw new OpenDidException(ErrorCode.GET_DID_DOC_FAILED);
+        } catch (Exception e) {
+            log.error("Failed to find DID Document: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.GET_DID_DOC_FAILED);
         }
     }
 
@@ -82,20 +113,26 @@ public class BlockchainServiceImpl implements StorageService {
      */
     @Override
     public VcMetaResDto findVcMeta(String vcId) {
-        if (vcId == null || vcId.isEmpty()) {
-            throw new OpenDidException(ErrorCode.VC_NOT_FOUND);
-        }
-        VcMeta vcMeta = BaseBlockChainUtil.findVcMeta(vcId);
+        try {
+            ContractApi contractApi = getContractApiInstance();
+            VcMeta vcMeta = (VcMeta) contractApi.getVcMetadata(vcId);
 
-        if (vcMeta == null)  {
-            throw new OpenDidException(ErrorCode.VC_NOT_FOUND);
-        }
-        String encodedVcMeta = BaseMultibaseUtil.encode(vcMeta.toJson().getBytes(StandardCharsets.UTF_8));
+            if (vcMeta == null)  {
+                throw new OpenDidException(ErrorCode.VC_NOT_FOUND);
+            }
+            String encodedVcMeta = BaseMultibaseUtil.encode(vcMeta.toJson().getBytes(StandardCharsets.UTF_8));
 
-        return VcMetaResDto.builder()
-                .vcId(vcId)
-                .vcMeta(encodedVcMeta)
-                .build();
+            return VcMetaResDto.builder()
+                    .vcId(vcId)
+                    .vcMeta(encodedVcMeta)
+                    .build();
+        } catch (BlockChainException e) {
+            log.error("Failed to find VC Meta: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.VC_META_RETRIEVAL_FAILED);
+        } catch (Exception e) {
+            log.error("Failed to find VC Meta: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.VC_META_RETRIEVAL_FAILED);
+        }
     }
 
     /**
