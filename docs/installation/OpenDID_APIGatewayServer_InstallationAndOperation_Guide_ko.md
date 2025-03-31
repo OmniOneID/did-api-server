@@ -32,7 +32,7 @@ Open DID API Gateway Server Installation And Operation Guide
   - [2.1. Git 설치](#21-git-설치)
 - [3. GitHub에서 소스 코드 복제하기](#3-github에서-소스-코드-복제하기)
   - [3.1. 소스코드 복제](#31-소스코드-복제)
-  - [3.2. 디렉토리 구조](#32-디렉토리-구조)
+  - [3.2. 디렉토리 구조](#32-디렉토리-구조)https://github.com/OmniOneID/did-release/blob/main/docs/guide/installation/OepnDID_Installation_Guide.md
 - [4. 서버 구동 방법](#4-서버-구동-방법)
   - [4.1. IntelliJ IDEA로 구동하기 (Gradle 지원)](#41-intellij-idea로-구동하기-gradle-지원)
     - [4.1.1. IntelliJ IDEA 설치 및 설정](#411-intellij-idea-설치-및-설정)
@@ -494,4 +494,4 @@ docker-compose up -d
   - `${your-config-dir}`에 위치한 `application.yml` 파일은 기본 설정 파일보다 우선적으로 적용됩니다.
 - 자세한 설정은 [5. 설정 가이드](#5-설정-가이드)를 참고합니다.
  
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/docs/guide/installation/OepnDID_Installation_Guide.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/unrelease-V1.0.1.0/OepnDID_Installation_Guide-V1.0.1.0_ko.md
