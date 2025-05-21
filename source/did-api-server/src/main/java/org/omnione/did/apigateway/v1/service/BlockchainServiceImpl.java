@@ -20,6 +20,8 @@ import org.omnione.did.ContractApi;
 import org.omnione.did.ContractFactory;
 import org.omnione.did.apigateway.v1.dto.DidDocResDto;
 import org.omnione.did.apigateway.v1.dto.VcMetaResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredDefResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredSchemaResDto;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import org.omnione.did.base.property.BlockchainProperty;
@@ -29,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.common.util.DidValidator;
 import org.omnione.did.data.model.did.DidDocAndStatus;
 import org.omnione.did.data.model.vc.VcMeta;
+import org.omnione.did.zkp.datamodel.definition.CredentialDefinition;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
 import org.omnione.exception.BlockChainException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -56,7 +60,7 @@ public class BlockchainServiceImpl implements StorageService {
      * @return a ContractApi instance.
      */
     public ContractApi initBlockChain() {
-        return ContractFactory.FABRIC.create(blockchainProperty.getFilePath());
+        return ContractFactory.EVM.create(blockchainProperty.getFilePath());
     }
 
     public ContractApi getContractApiInstance() {
@@ -129,9 +133,69 @@ public class BlockchainServiceImpl implements StorageService {
         } catch (BlockChainException e) {
             log.error("Failed to find VC Meta: " + e.getMessage());
             throw new OpenDidException(ErrorCode.VC_META_RETRIEVAL_FAILED);
-        } catch (Exception e) {
-            log.error("Failed to find VC Meta: " + e.getMessage());
-            throw new OpenDidException(ErrorCode.VC_META_RETRIEVAL_FAILED);
+        }
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential schema from the blockchain.
+     *
+     * @param id The identifier of the ZKP credential schema to retrieve.
+     * @return ZkpCredSchemaResDto containing the encoded credential schema.
+     * @throws OpenDidException if the schema is not found or cannot be retrieved.
+     */
+    @Override
+    public ZkpCredSchemaResDto findZkpCredSchema(String id) {
+        try {
+            ContractApi contractApi = getContractApiInstance();
+            CredentialSchema credSchema = (CredentialSchema) contractApi.getZKPCredential(id);
+
+            if (credSchema == null) {
+                throw new OpenDidException(ErrorCode.ZKP_CRED_SCHEMA_NOT_FOUND);
+            }
+
+            String encodedCredSchema = BaseMultibaseUtil.encode(credSchema.toJson().getBytes(StandardCharsets.UTF_8));
+
+            return ZkpCredSchemaResDto.builder()
+                    .credSchema(encodedCredSchema)
+                    .build();
+        } catch (OpenDidException e) {
+            log.error("Failed to find ZKP Credential Schema: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.ZKP_CRED_SCHEMA_RETRIEVAL_FAILED);
+        } catch (BlockChainException e) {
+            log.error("Failed to find ZKP Credential Schema: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.ZKP_CRED_SCHEMA_RETRIEVAL_FAILED);
+        }
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential definition from the blockchain.
+     *
+     * @param id The identifier of the ZKP credential definition to retrieve.
+     * @return ZkpCredDefResDto containing the encoded credential definition.
+     * @throws OpenDidException if the definition is not found or cannot be retrieved.
+     */
+    @Override
+    public ZkpCredDefResDto findZkpCredDef(String id) {
+        try {
+            ContractApi contractApi = getContractApiInstance();
+            CredentialDefinition credDef = (CredentialDefinition) contractApi.getZKPCredentialDefinition(id);
+
+            if (credDef == null) {
+                throw new OpenDidException(ErrorCode.ZKP_CRED_DEF_NOT_FOUND);
+            }
+
+            String encodedDredDef = BaseMultibaseUtil.encode(credDef.toJson().getBytes(StandardCharsets.UTF_8));
+
+            return ZkpCredDefResDto.builder()
+                .credDef(encodedDredDef)
+                .build();
+        } catch (OpenDidException e) {
+            log.error("Failed to find ZKP Credential Definition: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.ZKP_CRED_DEF_RETRIEVAL_FAILED);
+
+        } catch (BlockChainException e) {
+            log.error("Failed to find ZKP Credential Definition: " + e.getMessage());
+            throw new OpenDidException(ErrorCode.ZKP_CRED_DEF_RETRIEVAL_FAILED);
         }
     }
 

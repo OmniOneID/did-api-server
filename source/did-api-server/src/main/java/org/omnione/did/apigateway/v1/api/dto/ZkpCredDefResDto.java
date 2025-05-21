@@ -14,16 +14,27 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.constants;
+package org.omnione.did.apigateway.v1.api.dto;
 
-public class UrlConstant {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-    public static class GateWay {
-        public static final String V1 = "/api-gateway/api/v1";
-        public static final String DID_DOC = "/did-doc";
-        public static final String VC_META = "/vc-meta";
-        public static final String ZKP_CRED_SCHEMA = "/zkp-cred-schema";
-        public static final String ZKP_CRED_DEF = "/zkp-cred-def";
-
-    }
+/**
+ * ZKP Credential Definition Response DTO
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+public class ZkpCredDefResDto {
+    /**
+     * ZKP Credential Definition
+     */
+    private String credDef;
 }

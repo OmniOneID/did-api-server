@@ -21,6 +21,8 @@ import org.omnione.did.apigateway.v1.api.dto.DidDocApiResDto;
 import org.omnione.did.apigateway.v1.api.dto.VcMetaApiResDto;
 import org.omnione.did.apigateway.v1.dto.DidDocResDto;
 import org.omnione.did.apigateway.v1.dto.VcMetaResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredDefResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredSchemaResDto;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import lombok.RequiredArgsConstructor;
@@ -83,6 +85,30 @@ public class StorageServiceImpl implements StorageService {
         return VcMetaResDto.builder()
                 .vcMeta(vcMetaData.getVcMeta())
                 .build();
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential schema from the blockchain.
+     *
+     * @param id The identifier of the ZKP credential schema to retrieve.
+     * @return ZkpCredSchemaResDto containing the encoded credential schema.
+     * @throws OpenDidException if the schema is not found or cannot be retrieved.
+     */
+    @Override
+    public ZkpCredSchemaResDto findZkpCredSchema(String id) {
+        return null;
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential definition from the blockchain.
+     *
+     * @param id The identifier of the ZKP credential definition to retrieve.
+     * @return ZkpCredDefResDto containing the encoded credential definition.
+     * @throws OpenDidException if the definition is not found or cannot be retrieved.
+     */
+    @Override
+    public ZkpCredDefResDto findZkpCredDef(String id) {
+        return null;
     }
 
     /**

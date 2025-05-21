@@ -61,6 +61,9 @@ dependencies {
     implementation fileTree(dir: 'libs', includes: ['*'])
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // BESU Web3
+    implementation("org.web3j:core:4.13.0")
 }
 
 dependencyManagement {
