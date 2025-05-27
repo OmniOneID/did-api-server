@@ -18,6 +18,8 @@ package org.omnione.did.apigateway.v1.controller;
 
 import org.omnione.did.apigateway.v1.dto.DidDocResDto;
 import org.omnione.did.apigateway.v1.dto.VcMetaResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredDefResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredSchemaResDto;
 import org.omnione.did.apigateway.v1.service.StorageService;
 import org.omnione.did.base.constants.UrlConstant;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +61,29 @@ public class RouterController {
     @ResponseBody
     public VcMetaResDto getVcMetaData(@RequestParam(name = "vcId") String vcId) {
         return storageService.findVcMeta(vcId);
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential schema by its identifier.
+     *
+     * @param id The identifier of the ZKP credential schema to retrieve.
+     * @return ZkpCredSchemaResDto containing the ZKP credential schema.
+     */
+    @GetMapping(value = UrlConstant.GateWay.ZKP_CRED_SCHEMA)
+    @ResponseBody
+    public ZkpCredSchemaResDto getZkpCredSchema(@RequestParam(name = "id") String id) {
+        return storageService.findZkpCredSchema(id);
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential definition by its identifier.
+     *
+     * @param id The identifier of the ZKP credential definition to retrieve.
+     * @return ZkpCredDefResDto containing the ZKP credential definition.
+     */
+    @GetMapping(value = UrlConstant.GateWay.ZKP_CRED_DEF)
+    @ResponseBody
+    public ZkpCredDefResDto getZkpCredDef(@RequestParam(name = "id") String id) {
+        return storageService.findZkpCredDef(id);
     }
 }
