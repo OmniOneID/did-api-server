@@ -9,7 +9,7 @@ group = 'org.omnione.did'
 version = '2.0.0'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = '21'
 }
 jar {
     enabled = false
