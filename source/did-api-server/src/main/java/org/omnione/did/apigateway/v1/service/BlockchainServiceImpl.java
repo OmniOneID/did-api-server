@@ -50,29 +50,9 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class BlockchainServiceImpl implements StorageService {
 
-    private ContractApi contractApiInstance = null;
+    private final ContractApi contractApi;
 
     private final BlockchainProperty blockchainProperty;
-
-    /**
-     * Initializes the blockchain connection.
-     *
-     * @return a ContractApi instance.
-     */
-    public ContractApi initBlockChain() {
-        return ContractFactory.EVM.create(blockchainProperty.getFilePath());
-    }
-
-    public ContractApi getContractApiInstance() {
-        if (contractApiInstance == null) {
-            synchronized (BlockchainServiceImpl.class) {
-                if (contractApiInstance == null) {
-                    contractApiInstance = initBlockChain();
-                }
-            }
-        }
-        return contractApiInstance;
-    }
 
     /**
      * Retrieves a DID document for a given DID from the blockchain.
@@ -86,7 +66,6 @@ public class BlockchainServiceImpl implements StorageService {
         checkValidation(didKeyUrl);
 
         try {
-            ContractApi contractApi = getContractApiInstance();
             DidDocAndStatus didDocAndStatus = (DidDocAndStatus) contractApi.getDidDoc(didKeyUrl);
 
             if (didDocAndStatus == null) {
@@ -118,7 +97,6 @@ public class BlockchainServiceImpl implements StorageService {
     @Override
     public VcMetaResDto findVcMeta(String vcId) {
         try {
-            ContractApi contractApi = getContractApiInstance();
             VcMeta vcMeta = (VcMeta) contractApi.getVcMetadata(vcId);
 
             if (vcMeta == null)  {
@@ -146,7 +124,6 @@ public class BlockchainServiceImpl implements StorageService {
     @Override
     public ZkpCredSchemaResDto findZkpCredSchema(String id) {
         try {
-            ContractApi contractApi = getContractApiInstance();
             CredentialSchema credSchema = (CredentialSchema) contractApi.getZKPCredential(id);
 
             if (credSchema == null) {
@@ -177,7 +154,6 @@ public class BlockchainServiceImpl implements StorageService {
     @Override
     public ZkpCredDefResDto findZkpCredDef(String id) {
         try {
-            ContractApi contractApi = getContractApiInstance();
             CredentialDefinition credDef = (CredentialDefinition) contractApi.getZKPCredentialDefinition(id);
 
             if (credDef == null) {
