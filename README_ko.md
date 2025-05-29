@@ -30,12 +30,13 @@ did-api-server
     └── did-api-server
         ├── gradle
         ├── libs
-            └── did-sdk-common-1.0.0.jar
-            └── did-blockchain-sdk-server-1.0.0.jar
-            └── did-core-sdk-server-1.0.0..jar
-            └── did-crypto-sdk-server-1.0.0.jar
-            └── did-datamodel-sdk-server-1.0.0.jar
-            └── did-wallet-sdk-server-1.0.0.jar
+            └── did-sdk-common-2.0.0.jar
+            └── did-blockchain-sdk-server-2.0.0.jar
+            └── did-core-sdk-server-2.0.0..jar
+            └── did-crypto-sdk-server-2.0.0.jar
+            └── did-datamodel-sdk-server-2.0.0.jar
+            └── did-wallet-sdk-server-2.0.0.jar
+            └── did-zkp-sdk-server-2.0.0.jar
         └── src
         └── build.gradle
         └── README.md
@@ -77,12 +78,13 @@ did-api-server
 
 1. **Open DID 라이브러리**: Open DID 프로젝트에서 개발된 라이브러리로, [libs 폴더](source/did-api-server/libs)에 포함되어 있습니다. 주요 라이브러리는 다음과 같습니다:
 
-   - `did-sdk-common-1.0.0.jar`
-   - `did-blockchain-sdk-server-1.0.0.jar`
-   - `did-core-sdk-server-1.0.0.jar`
-   - `did-crypto-sdk-server-1.0.0.jar`
-   - `did-datamodel-sdk-server-1.0.0.jar`
-   - `did-wallet-sdk-server-1.0.0.jar`
+   - `did-sdk-common-2.0.0.jar`
+   - `did-blockchain-sdk-server-2.0.0.jar`
+   - `did-core-sdk-server-2.0.0.jar`
+   - `did-crypto-sdk-server-2.0.0.jar`
+   - `did-datamodel-sdk-server-2.0.0.jar`
+   - `did-wallet-sdk-server-2.0.0.jar`
+   - `did-zkp-sdk-server-2.0.0.jar`
 
 2. **서드 파티 라이브러리**: 이 라이브러리들은 오픈 소스 종속성으로, [build.gradle](source/did-api-server/build.gradle) 파일을 통해 관리됩니다. 서드 파티 라이브러리와 해당 라이선스의 자세한 목록은 [dependencies-license.md](dependencies-license.md) 파일을 참고하십시오.
 

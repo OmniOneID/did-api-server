@@ -18,12 +18,12 @@ fullPage: false
 
 # API Gateway Server Error
 
-- Date: 2024-09-03
-- Version: v1.0.1
+- Date: 2025-05-30
+- Version: v2.0.0
 
 | Version | Date       | Changes                      |
 |---------|------------|------------------------------|
-| v1.0.1  | 2025-05-21 | Added ZKP-related error codes |
+| v2.0.0  | 2025-05-30 | Added ZKP-related error codes |
 | v1.0.0  | 2024-09-03 | Initial version              |
 
 <div style="page-break-after: always;"></div>

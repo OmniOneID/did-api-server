@@ -18,8 +18,8 @@ puppeteer:
 API Gateway API
 ==
 
-- 일자: 2024-08-19
-- 버전: v1.0.0
+- 일자: 2025-05-30
+- 버전: v2.0.0
   
 목차
 ---
@@ -33,6 +33,8 @@ API Gateway API
 - [4. 단일 호출 API](#4-단일-호출-api)
     - [4.1. Get DID Document](#41-get-did-document)
     - [4.2. Get VC Metadata](#42-get-vc-metadata)
+    - [4.3. Get ZKP Credential Schema](#43-get-zkp-credential-schema)
+    - [4.4. Get ZKP Credential Definition](#44-get-zkp-credential-definition)
 
 <!-- /TOC -->
 
@@ -68,10 +70,12 @@ API Gateway Service는 현재 특정 기능을 수행하기 위한 프로토콜�
 
 ### 3.2. 단일호출 API
 
-| API          | URL            | Description       | 표준API |
-| ------------ | -------------- | ----------------- | ------- |
-| `get-diddoc` | /api/v1/diddoc | DID Document 조회 | N       |
-| `get-vcmeta` | /api/v1/vcmeta | VC 메타데이터 조회   | N       |
+| API                 | URL                        | Description                  | 표준API |
+| ------------------- | -------------------------- | ---------------------------- | ------- |
+| `get-diddoc`        | /api/v1/diddoc             | DID Document 조회            | N       |
+| `get-vcmeta`        | /api/v1/vcmeta             | VC 메타데이터 조회           | N       |
+| `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema 조회   | N       |
+| `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition 조회 | N       |
 
 <div style="page-break-after: always; margin-top: 50px;"></div>
 
@@ -81,10 +85,12 @@ API Gateway Service는 현재 특정 기능을 수행하기 위한 프로토콜�
 따라서 순서대로 호출해야 하는 API의 집단인 순차 API(aka, 프로토콜)이 아니므로 프로토콜 번호가 부여되지 않는다.
 API Gateway Service가 제공하는 단일 호출 API 목록은 아래 표와 같다.
 
-| API          | URL            | Description       | 표준API |
-| ------------ | -------------- | ----------------- | ------- |
-| `get-diddoc` | /api/v1/diddoc | DID Document 조회 | N       |
-| `get-vcmeta` | /api/v1/vcmeta | VC 메타데이터 조회   | N       |
+| API                 | URL                        | Description                  | 표준API |
+| ------------------- | -------------------------- | ---------------------------- | ------- |
+| `get-diddoc`        | /api/v1/diddoc             | DID Document 조회            | N       |
+| `get-vcmeta`        | /api/v1/vcmeta             | VC 메타데이터 조회           | N       |
+| `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema 조회   | N       |
+| `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition 조회 | N       |
 
 ■ Authorization
 
@@ -151,15 +157,14 @@ def object _GetDidDoc: "Get DID Document 응답문"
 
 | Code         | Description              |
 | ------------ | ------------------------ |
-| SSRVAGW11500 | 존재하지 않는 DID입니다. |
-| SSRVAGW11501 | 유효하지 않은 DID입니다. |
+| SSRVAGW00300 | 존재하지 않는 DID입니다. |
+| SSRVAGW00301 | 유효하지 않은 DID입니다. |
 
 **■ Status 500 - Server error**
 
 | Code         | Description                   |
 | ------------ | ----------------------------- |
-| SSRVAGW11000 | 블록체인 연동에 실패헀습니다. |
-| SSRVAGW11001 | DID 조회에 실패했습니다.      |
+| SSRVAGW00200 | DID 조회에 실패했습니다.      |
 
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
@@ -222,7 +227,7 @@ N/A
 #### 4.2.2. Response
 
 **■ Process**
-1. did로 DID Document 조회
+1. vcId로 VC Metadata 조회
 
 **■ Status 200 - Success**
 
@@ -237,15 +242,14 @@ def object _GetVcMEta: "Get VC Metadata 응답문"
 
 | Code         | Description             |
 | ------------ | ----------------------- |
-| SSRVAGW12000 | 존재하지 않는 VC입니다. |
-| SSRVAGW12001 | 유효하지 않은 VC입니다. |
+| SSRVAGW00401 | 존재하지 않는 VC입니다. |
+| SSRVAGW00400 | 유효하지 않은 VC입니다. |
 
 **■ Status 500 - Server error**
 
 | Code         | Description                   |
 | ------------ | ----------------------------- |
-| SSRVAGW11000 | 블록체인 연동에 실패헀습니다. |
-| SSRVAGW11002 | VC meta 조회에 실패했습니다.  |
+| SSRVAGW00201 | VC meta 조회에 실패했습니다.  |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
@@ -266,5 +270,169 @@ Content-Type: application/json;charset=utf-8
 {
   "vcId": "c184fb29-e6e1-4144-bae0-ccc44a3770df",
   "vcMeta": "meyJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cDovLzE..."//encodeData
+}
+```
+
+<div style="page-break-after: always; margin-top: 40px;"></div>
+
+### 4.3. Get ZKP Credential Schema
+
+ZKP Credential Schema를 조회한다.
+
+| Item          | Description                  | Remarks |
+| ------------- | ---------------------------- | ------- |
+| Method        | `GET`                        |         |
+| Path          | `/api/v1/zkp-cred-schema`    |         |
+| Authorization | -                            |         |
+
+#### 4.3.1. Request
+
+**■ HTTP Headers**
+
+| Header           | Value                            | Remarks |
+| ---------------- | -------------------------------- | ------- |
+| + `Content-Type` | `application/json;charset=utf-8` |         |     
+
+**■ Path Parameters**
+
+N/A
+
+**■ Query Parameters**
+
+| name  | Description                        | Remarks |
+| ----- | ---------------------------------- | ------- |
+| + `id` | ZKP Credential Schema identifier  |         |
+
+**■ HTTP Body**
+
+N/A
+
+<div style="page-break-after: always; margin-top: 30px;"></div>
+
+#### 4.3.2. Response
+
+**■ Process**
+1. ZKP Credential Schema id로 ZKP Credential Schema 조회
+
+**■ Status 200 - Success**
+
+```json
+{
+  "credSchema": "string"  // Multibase encoded ZKP Credential Schema data
+}
+```
+
+**■ Status 400 - Client error**
+
+| Code         | Description                             |
+| ------------ | --------------------------------------- |
+| SSRVAGW00500 | Failed to find ZKP Credential Schema   |
+
+**■ Status 500 - Server error**
+
+| Code         | Description                                 |
+| ------------ | ------------------------------------------- |
+| SSRVAGW00202 | Failed to retrieve ZKP Credential Schema   |
+
+<div style="page-break-after: always; margin-top: 30px;"></div>
+
+#### 4.3.3. Example
+
+**■ Request**
+
+```shell
+curl -v -X GET "http://${Host}:${Port}/api/v1/zkp-cred-schema?id=schema-123"
+```
+
+**■ Response**
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=utf-8
+
+{
+  "credSchema": "meyJjcmVkZW50aWFsU2NoZW1hIjp7ImlkIjoiaHR0cDovLzE..."
+}
+```
+
+<div style="page-break-after: always; margin-top: 40px;"></div>
+
+### 4.4. Get ZKP Credential Definition
+
+ZKP Credential Definition을 조회한다.
+
+| Item          | Description                     | Remarks |
+| ------------- | ------------------------------- | ------- |
+| Method        | `GET`                           |         |
+| Path          | `/api/v1/zkp-cred-def`          |         |
+| Authorization | -                               |         |
+
+#### 4.4.1. Request
+
+**■ HTTP Headers**
+
+| Header           | Value                            | Remarks |
+| ---------------- | -------------------------------- | ------- |
+| + `Content-Type` | `application/json;charset=utf-8` |         |     
+
+**■ Path Parameters**
+
+N/A
+
+**■ Query Parameters**
+
+| name  | Description                           | Remarks |
+| ----- | ------------------------------------- | ------- |
+| + `id` | ZKP Credential Definition identifier |         |
+
+**■ HTTP Body**
+
+N/A
+
+<div style="page-break-after: always; margin-top: 30px;"></div>
+
+#### 4.4.2. Response
+
+**■ Process**
+1. ZKP credential definition id로 ZKP Credential Definition 조회
+
+**■ Status 200 - Success**
+
+```json
+{
+  "credDef": "string"  // Multibase encoded ZKP Credential Definition data
+}
+```
+
+**■ Status 400 - Client error**
+
+| Code         | Description                                |
+| ------------ | ------------------------------------------ |
+| SSRVAGW00501 | Failed to find ZKP Credential Definition  |
+
+**■ Status 500 - Server error**
+
+| Code         | Description                                    |
+| ------------ | ---------------------------------------------- |
+| SSRVAGW00203 | Failed to retrieve ZKP Credential Definition  |
+
+<div style="page-break-after: always; margin-top: 30px;"></div>
+
+#### 4.4.3. Example
+
+**■ Request**
+
+```shell
+curl -v -X GET "http://${Host}:${Port}/api/v1/zkp-cred-def?id=def-456"
+```
+
+**■ Response**
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=utf-8
+
+{
+  "credDef": "meyJjcmVkZW50aWFsRGVmaW5pdGlvbiI6eyJpZCI6Imh0dHA..."
 }
 ```

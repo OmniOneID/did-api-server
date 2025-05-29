@@ -1,5 +1,13 @@
 # Changelog
 
+
+## [Released] (v2.0.0)
+
+## v2.0.0 (2025-05-30)
+
+### 🚀 New Features
+- Support for Besu blockchain
+
 ## [Unreleased] (v1.0.1)
 
 ### 🚀 New Features
