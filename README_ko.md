@@ -21,11 +21,14 @@ did-api-server
 ├── SECURITY.md
 ├── docs
 │   └── api
+│       ├── APIGateway_API.md
 │       └── APIGateway_API_ko.md
 │   └── errorCode
-│       └── APIGateway_ErrorCode.md
+│       ├── APIGateway_ErrorCode.md
+│       └── APIGateway_ErrorCode_ko.md
 │   └── installation
-│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       ├── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide_ko.md
 └── source
     └── did-api-server
         ├── gradle

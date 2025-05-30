@@ -21,18 +21,21 @@ did-api-server
 ├── SECURITY.md
 ├── docs
 │   └── api
+│       ├── APIGateway_API.md
 │       └── APIGateway_API_ko.md
 │   └── errorCode
-│       └── APIGateway_ErrorCode.md
+│       ├── APIGateway_ErrorCode.md
+│       └── APIGateway_ErrorCode_ko.md
 │   └── installation
-│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       ├── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide_ko.md
 └── source
     └── did-api-server
         ├── gradle
         ├── libs
             └── did-sdk-common-2.0.0.jar
             └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0..jar
+            └── did-core-sdk-server-2.0.0.jar
             └── did-crypto-sdk-server-2.0.0.jar
             └── did-datamodel-sdk-server-2.0.0.jar
             └── did-wallet-sdk-server-2.0.0.jar

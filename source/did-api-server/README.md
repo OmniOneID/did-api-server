@@ -12,7 +12,7 @@ apigateway
 ├── libs
     └── did-sdk-common-2.0.0.jar
     └── did-blockchain-sdk-server-2.0.0.jar
-    └── did-core-sdk-server-2.0.0..jar
+    └── did-core-sdk-server-2.0.0.jar
     └── did-crypto-sdk-server-2.0.0.jar
     └── did-datamodel-sdk-server-2.0.0.jar
     └── did-wallet-sdk-server-2.0.0.jar

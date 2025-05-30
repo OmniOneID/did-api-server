@@ -18,8 +18,8 @@ puppeteer:
 Open DID API Gateway Server Installation And Operation Guide
 ==
 
-- Date: 2024-09-02
-- Version: v1.0.0
+- Date: 2025-05-30
+- Version: v2.0.0
 
 목차
 ==
