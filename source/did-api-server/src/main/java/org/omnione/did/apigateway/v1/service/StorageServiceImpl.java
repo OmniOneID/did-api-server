@@ -16,6 +16,7 @@
 
 package org.omnione.did.apigateway.v1.service;
 
+import com.google.gson.JsonSyntaxException;
 import feign.FeignException;
 import org.omnione.did.apigateway.v1.api.RepositoryFeign;
 import org.omnione.did.apigateway.v1.api.dto.DidDocApiResDto;
@@ -31,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.util.BaseMultibaseUtil;
 import org.omnione.did.common.util.DidValidator;
 import org.omnione.did.data.model.vc.VcMeta;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
+import org.omnione.did.zkp.datamodel.util.GsonWrapper;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -120,7 +123,12 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public ZkpCredSchemaResDto findZkpCredSchema(String id) {
-        return null;
+        String credentialSchema = repositoryFeign.getZkpCredSchema(id);
+        String encodedCredentialSchema = BaseMultibaseUtil.encode(credentialSchema.getBytes(StandardCharsets.UTF_8));
+
+        return ZkpCredSchemaResDto.builder()
+                .credSchema(encodedCredentialSchema)
+                .build();
     }
 
     /**
@@ -132,7 +140,12 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public ZkpCredDefResDto findZkpCredDef(String id) {
-        return null;
+        String credentialDefinition = repositoryFeign.getZkpCredDef(id);
+        String encodedCredentialDefinition = BaseMultibaseUtil.encode(credentialDefinition.getBytes(StandardCharsets.UTF_8));
+
+        return ZkpCredDefResDto.builder()
+                .credDef(encodedCredentialDefinition)
+                .build();
     }
 
     /**

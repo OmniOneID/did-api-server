@@ -46,4 +46,25 @@ public class BaseMultibaseUtil {
             throw new OpenDidException(ErrorCode.ENCODING_FAILED);
         }
     }
+    /**
+     * Decodes a given string from its multibase encoded form back to its original byte array.
+     *
+     * @param encodedData The encoded string to decode.
+     * @return The decoded byte array.
+     * @throws OpenDidException if the decoding process fails.
+     */
+    public static byte[] decode(String encodedData) {
+        try {
+            byte[] decodedBytes = MultiBaseUtils.decode(encodedData);
+            if (decodedBytes == null) {
+                log.error("Error occurred while decoding the input data.");
+                throw new OpenDidException(ErrorCode.DECODING_FAILED);
+            }
+            return decodedBytes;
+        }  catch (CryptoException e) {
+            log.error("Error occurred while decoding the input data. {}", e.getMessage());
+            throw new OpenDidException(ErrorCode.DECODING_FAILED);
+        }
+    }
+
 }
