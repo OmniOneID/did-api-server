@@ -42,7 +42,7 @@ import java.nio.charset.StandardCharsets;
  */
 @RequiredArgsConstructor
 @Slf4j
-@Profile("lls")
+@Profile("lss")
 @Service
 public class StorageServiceImpl implements StorageService {
     private final RepositoryFeign repositoryFeign;
