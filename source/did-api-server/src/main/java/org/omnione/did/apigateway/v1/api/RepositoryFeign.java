@@ -16,39 +16,37 @@
 
 package org.omnione.did.apigateway.v1.api;
 
-import org.omnione.did.apigateway.v1.api.dto.DidDocApiResDto;
-import org.omnione.did.apigateway.v1.api.dto.VcMetaApiResDto;
 import org.omnione.did.apigateway.v1.api.dto.ZkpCredDefResDto;
 import org.omnione.did.apigateway.v1.api.dto.ZkpCredSchemaResDto;
 import org.omnione.did.base.constants.UrlConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Repository Feign
+ * Feign client for the Storage server.
+ * This class was temporarily used instead of the BlockChain service and is no longer in use.
  */
-@FeignClient(value = "Storage", url = "127.0.0.1:8097", path = "/repository/api/v1")
+@FeignClient(value = "Storage", url = "${lls.url:http://127.0.0.1:8098}" + UrlConstant.LLS.V1)
 public interface RepositoryFeign {
 
     /**
-     * Get DID Document
+     * Gets a DID document by its DID.
      *
-     * @param did DID
-     * @return DID Document API Response DTO
+     * @param did DID to get the document for.
+     * @return Found DID document.
      */
-    @GetMapping("/did-doc")
-    DidDocApiResDto getDid(@RequestParam(name = "did") String did);
+    @GetMapping(UrlConstant.LLS.DID)
+    String getDid(@RequestParam(name = "did") String did);
 
     /**
-     * Get VC Meta Data
+     * Gets metadata for a Verifiable Credential (VC) by its identifier.
      *
-     * @param vcId VC ID
-     * @return VC Meta Data API Response DTO
+     * @param vcId Identifier of the Verifiable Credential.
+     * @return Found VC metadata.
      */
-    @GetMapping("/vc-meta")
-    VcMetaApiResDto getVcMetaData(@RequestParam(name = "vcId") String vcId);
+    @GetMapping(UrlConstant.LLS.VC_META)
+    String getVcMetaData(@RequestParam(name = "vcId") String vcId);
 
     /**
      * Get ZKP Credential Schema
@@ -56,7 +54,7 @@ public interface RepositoryFeign {
      * @param id Schema ID
      * @return ZKP Credential Schema API Response DTO
      */
-    @GetMapping("/zkp-cred-schema")
+    @GetMapping(UrlConstant.LLS.CREDENTIAL_SCHEMA)
     ZkpCredSchemaResDto getZkpCredSchema(@RequestParam(name = "id") String id);
 
     /**
@@ -65,6 +63,6 @@ public interface RepositoryFeign {
      * @param id Definition ID
      * @return ZKP Credential Definition API Response DTO
      */
-    @GetMapping("/zkp-cred-def")
+    @GetMapping(UrlConstant.LLS.CREDENTIAL_DEFINITION)
     ZkpCredDefResDto getZkpCredDef(@RequestParam(name = "id") String id);
 }

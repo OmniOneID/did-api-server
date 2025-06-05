@@ -46,7 +46,7 @@ import java.nio.charset.StandardCharsets;
  */
 @RequiredArgsConstructor
 @Slf4j
-@Profile({"!repository & !sample"})
+@Profile({"!lls & !sample"})
 @Service
 public class BlockchainServiceImpl implements StorageService {
 
