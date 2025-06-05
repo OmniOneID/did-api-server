@@ -55,7 +55,7 @@ public interface RepositoryFeign {
      * @return ZKP Credential Schema API Response DTO
      */
     @GetMapping(UrlConstant.LSS.CREDENTIAL_SCHEMA)
-    String getZkpCredSchema(@RequestParam(name = "id") String id);
+    String getZkpCredSchema(@RequestParam(name = "schemaId") String schemaId);
 
     /**
      * Get ZKP Credential Definition
@@ -64,5 +64,5 @@ public interface RepositoryFeign {
      * @return ZKP Credential Definition API Response DTO
      */
     @GetMapping(UrlConstant.LSS.CREDENTIAL_DEFINITION)
-    String getZkpCredDef(@RequestParam(name = "id") String id);
+    String getZkpCredDef(@RequestParam(name = "definitionId") String definitionId);
 }
