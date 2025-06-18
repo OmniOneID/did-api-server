@@ -1,4 +1,3 @@
-
 ---
 puppeteer:
 pdf:
@@ -15,6 +14,7 @@ image:
 quality: 100
 fullPage: false
 ---
+
 
 # API Gateway Server Error
 
