@@ -32,7 +32,7 @@ Open DID API Gateway Server Installation And Operation Guide
   - [2.1. Git 설치](#21-git-설치)
 - [3. GitHub에서 소스 코드 복제하기](#3-github에서-소스-코드-복제하기)
   - [3.1. 소스코드 복제](#31-소스코드-복제)
-  - [3.2. 디렉토리 구조](#32-디렉토리-구조)https://github.com/OmniOneID/did-release/blob/main/docs/guide/installation/OepnDID_Installation_Guide.md
+  - [3.2. 디렉토리 구조](#32-디렉토리-구조)
 - [4. 서버 구동 방법](#4-서버-구동-방법)
   - [4.1. IntelliJ IDEA로 구동하기 (Gradle 지원)](#41-intellij-idea로-구동하기-gradle-지원)
     - [4.1.1. IntelliJ IDEA 설치 및 설정](#411-intellij-idea-설치-및-설정)
@@ -87,7 +87,7 @@ API Gateway Server는 App이 블록체인 서버로부터 특정 데이터를 �
 <br/>
 
 ## 1.3. 시스템 요구 사항
-- **Java 17** 이상
+- **Java 21** 이상
 - **Gradle 7.0** 이상
 - **Docker** 및 **Docker Compose** (Docker 사용 시)
 - 최소 **2GB RAM** 및 **10GB 디스크 공간**
@@ -161,7 +161,7 @@ did-api-server
         ├── libs
             └── did-sdk-common-2.0.0.jar
             └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0..jar
+            └── did-core-sdk-server-2.0.0.jar
             └── did-crypto-sdk-server-2.0.0.jar
             └── did-datamodel-server-2.0.0.jar
             └── did-wallet-sdk-server-2.0.0.jar

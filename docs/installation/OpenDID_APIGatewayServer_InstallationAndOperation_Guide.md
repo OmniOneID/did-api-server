@@ -88,7 +88,7 @@ The API Gateway Server acts as an intermediary, allowing the app to retrieve spe
 <br/>
 
 ## 1.3. System Requirements
-- **Java 17** or higher
+- **Java 21** or higher
 - **Gradle 7.0** or higher
 - **Docker** and **Docker Compose** (when using Docker)
 - At least **2GB RAM** and **10GB of disk space**
@@ -162,7 +162,7 @@ did-api-server
         ├── libs
             └── did-sdk-common-2.0.0.jar
             └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0..jar
+            └── did-core-sdk-server-2.0.0.jar
             └── did-crypto-sdk-server-2.0.0.jar
             └── did-datamodel-server-2.0.0.jar
             └── did-wallet-sdk-server-2.0.0.jar
