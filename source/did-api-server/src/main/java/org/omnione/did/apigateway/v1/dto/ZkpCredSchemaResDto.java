@@ -14,12 +14,27 @@
  * limitations under the License.
  */
 
-package org.omnione.did.base.config;
+package org.omnione.did.apigateway.v1.dto;
 
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.context.annotation.Configuration;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Configuration
-@ConfigurationPropertiesScan("org.omnione.did.base.property")
-public class WebConfig {
+/**
+ * ZKP Credential Schema Response DTO
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
+public class ZkpCredSchemaResDto {
+    /**
+     * ZKP Credential Schema
+     */
+    private String credSchema;
 }

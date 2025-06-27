@@ -71,6 +71,16 @@ After QA approval, manage the complete version control of all modules in a separ
    | Repository     | Version | Changelog                                                                       | Release |
    | -------------- | ------- | ------------------------------------------------------------------------------- | ------- |
    | did-api-server | V1.0.0  | [Changelog](https://github.com/OmniOneID/did-api-server/blob/main/CHANGELOG.md) |         |
+   | ..             | ..      | ..                                                                              |         |
+
+   ## Release Note V2.0.0
+
+   | Repository     | Version | Changelog                                                                       | Release |
+   | -------------- | ------- | ------------------------------------------------------------------------------- | ------- |
+   | did-api-server | V2.0.0  | [Changelog](https://github.com/OmniOneID/did-api-server/blob/main/CHANGELOG.md) |         |
+   | ..             | ..      | ..                                                                              |         |
+
+
 
 <br>
 

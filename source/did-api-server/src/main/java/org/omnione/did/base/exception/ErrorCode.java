@@ -27,16 +27,21 @@ import lombok.Getter;
 public enum ErrorCode {
 
     ENCODING_FAILED("SSRVAGW00100", "Failed to encode data.", 500),
+    DECODING_FAILED("SSRVAGW00101", "Failed to decode data.", 500),
 
     GET_DID_DOC_FAILED("SSRVAGW00200", "Failed to retrieve DID document.", 500),
     VC_META_RETRIEVAL_FAILED("SSRVAGW00201", "Failed to retrieve VC meta.", 500),
+    ZKP_CRED_SCHEMA_RETRIEVAL_FAILED("SSRVAGW00202", "Failed to retrieve ZKP Credential Schema", 500),
+    ZKP_CRED_DEF_RETRIEVAL_FAILED("SSRVAGW00203", "Failed to retrieve ZKP Credential Definition", 500),
 
     DID_NOT_FOUND("SSRVAGW00300", "Failed to find DID: DID value is invalid.", 400),
     DID_INVALID("SSRVAGW00301", "Failed to process DID: DID is invalid.", 400),
 
     VC_ID_INVALID("SSRVAGW00400", "Failed to process VC: VC ID is invalid.", 400),
     VC_NOT_FOUND("SSRVAGW00401", "Failed to find VC: VC META data not found.", 400),
-    ;
+
+    ZKP_CRED_SCHEMA_NOT_FOUND("SSRVAGW00500", "Failed to find ZKP Credential Schema", 400),
+    ZKP_CRED_DEF_NOT_FOUND("SSRVAGW00501", "Failed to find ZKP Credential Definition", 400);
 
     private final String code;
     private final String message;

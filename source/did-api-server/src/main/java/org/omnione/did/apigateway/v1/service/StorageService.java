@@ -18,6 +18,8 @@ package org.omnione.did.apigateway.v1.service;
 
 import org.omnione.did.apigateway.v1.dto.DidDocResDto;
 import org.omnione.did.apigateway.v1.dto.VcMetaResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredDefResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredSchemaResDto;
 
 /**
  * Storage service interface for handling DID documents and VC metadata.
@@ -38,4 +40,21 @@ public interface StorageService {
      * @return Found VC metadata.
      */
     VcMetaResDto findVcMeta(String vcId);
+
+    /**
+     * Finds a Zero-Knowledge Proof (ZKP) credential schema by its identifier.
+     *
+     * @param id Identifier of the ZKP credential schema.
+     * @return Found ZKP credential schema.
+     */
+    ZkpCredSchemaResDto findZkpCredSchema(String id);
+
+    /**
+     * Finds a Zero-Knowledge Proof (ZKP) credential definition by its identifier.
+     *
+     * @param id Identifier of the ZKP credential definition.
+     * @return Found ZKP credential definition.
+     */
+    ZkpCredDefResDto findZkpCredDef(String id);
+
 }

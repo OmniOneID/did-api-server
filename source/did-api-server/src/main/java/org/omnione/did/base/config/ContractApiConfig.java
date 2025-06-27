@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 OmniOne.
+ * Copyright 2025 OmniOne.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.omnione.did.base.config;
 
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.omnione.did.ContractApi;
+import org.omnione.did.ContractFactory;
+import org.omnione.did.base.property.BlockchainProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
-@ConfigurationPropertiesScan("org.omnione.did.base.property")
-public class WebConfig {
+@Profile("!sample & !lss")
+public class ContractApiConfig {
+    @Bean
+    public ContractApi contractApi(BlockchainProperty blockchainProperty) {
+        System.out.println(blockchainProperty.getFilePath());
+
+        return ContractFactory.EVM.create(blockchainProperty.getFilePath());
+    }
 }

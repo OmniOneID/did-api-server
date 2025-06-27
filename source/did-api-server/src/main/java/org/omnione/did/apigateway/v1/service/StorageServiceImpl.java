@@ -16,27 +16,36 @@
 
 package org.omnione.did.apigateway.v1.service;
 
+import com.google.gson.JsonSyntaxException;
+import feign.FeignException;
 import org.omnione.did.apigateway.v1.api.RepositoryFeign;
 import org.omnione.did.apigateway.v1.api.dto.DidDocApiResDto;
 import org.omnione.did.apigateway.v1.api.dto.VcMetaApiResDto;
 import org.omnione.did.apigateway.v1.dto.DidDocResDto;
 import org.omnione.did.apigateway.v1.dto.VcMetaResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredDefResDto;
+import org.omnione.did.apigateway.v1.dto.ZkpCredSchemaResDto;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.omnione.did.base.util.BaseMultibaseUtil;
 import org.omnione.did.common.util.DidValidator;
+import org.omnione.did.data.model.vc.VcMeta;
+import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
+import org.omnione.did.zkp.datamodel.util.GsonWrapper;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * Implementation of the StorageService interface.
  * This service manages the retrieval of DID documents and VC metadata from a repository.
- *
  */
 @RequiredArgsConstructor
 @Slf4j
-@Profile("repository")
+@Profile("lss")
 @Service
 public class StorageServiceImpl implements StorageService {
     private final RepositoryFeign repositoryFeign;
@@ -50,16 +59,26 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public DidDocResDto findDidDocument(String did) {
-        checkValidation(did);
-        DidDocApiResDto didDoc = repositoryFeign.getDid(did);
-        DidDocResDto resDidDoc = DidDocResDto.builder()
-                .didDoc(didDoc.getDidDoc())
-                .build();
+        try {
+            checkValidation(did);
+            String didDocument = repositoryFeign.getDid(did);
 
-        if(resDidDoc == null || resDidDoc.getDidDoc().isEmpty()){
+            String encodedDidDoc = BaseMultibaseUtil.encode(didDocument.getBytes(StandardCharsets.UTF_8));
+
+            return DidDocResDto.builder()
+                    .didDoc(encodedDidDoc)
+                    .build();
+        } catch (OpenDidException e) {
+            log.error("Failed to find DID document.", e);
+            throw e;
+        } catch (
+                FeignException e) {
+            log.error("Failed to find DID document.", e);
+            throw new OpenDidException(ErrorCode.DID_NOT_FOUND);
+        } catch (Exception e) {
+            log.error("Failed to find DID document.", e);
             throw new OpenDidException(ErrorCode.DID_NOT_FOUND);
         }
-        return resDidDoc;
     }
 
     /**
@@ -71,17 +90,61 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public VcMetaResDto findVcMeta(String vcId) {
-        if(vcId == null || vcId.isEmpty()){
+        if (vcId == null || vcId.isEmpty()) {
             throw new OpenDidException(ErrorCode.VC_ID_INVALID);
         }
-        VcMetaApiResDto vcMetaData = repositoryFeign.getVcMetaData(vcId);
 
-        if(vcMetaData == null || vcMetaData.getVcMeta().isEmpty()){
+        try {
+            String vcMetaData = repositoryFeign.getVcMetaData(vcId);
+            String encodedVcMeta = BaseMultibaseUtil.encode(vcMetaData.getBytes(StandardCharsets.UTF_8));
+
+            return VcMetaResDto.builder()
+                    .vcId(vcId)
+                    .vcMeta(encodedVcMeta)
+                    .build();
+        } catch (OpenDidException e) {
+            log.error("Failed to find VC meta data.", e);
+            throw e;
+        } catch (FeignException e) {
+            log.error("Failed to find VC meta data.", e);
+            throw new OpenDidException(ErrorCode.VC_NOT_FOUND);
+        } catch (Exception e) {
+            log.error("Failed to find VC meta data.", e);
             throw new OpenDidException(ErrorCode.VC_NOT_FOUND);
         }
+    }
 
-        return VcMetaResDto.builder()
-                .vcMeta(vcMetaData.getVcMeta())
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential schema from the blockchain.
+     *
+     * @param id The identifier of the ZKP credential schema to retrieve.
+     * @return ZkpCredSchemaResDto containing the encoded credential schema.
+     * @throws OpenDidException if the schema is not found or cannot be retrieved.
+     */
+    @Override
+    public ZkpCredSchemaResDto findZkpCredSchema(String id) {
+        String credentialSchema = repositoryFeign.getZkpCredSchema(id);
+        String encodedCredentialSchema = BaseMultibaseUtil.encode(credentialSchema.getBytes(StandardCharsets.UTF_8));
+
+        return ZkpCredSchemaResDto.builder()
+                .credSchema(encodedCredentialSchema)
+                .build();
+    }
+
+    /**
+     * Retrieves a Zero-Knowledge Proof (ZKP) credential definition from the blockchain.
+     *
+     * @param id The identifier of the ZKP credential definition to retrieve.
+     * @return ZkpCredDefResDto containing the encoded credential definition.
+     * @throws OpenDidException if the definition is not found or cannot be retrieved.
+     */
+    @Override
+    public ZkpCredDefResDto findZkpCredDef(String id) {
+        String credentialDefinition = repositoryFeign.getZkpCredDef(id);
+        String encodedCredentialDefinition = BaseMultibaseUtil.encode(credentialDefinition.getBytes(StandardCharsets.UTF_8));
+
+        return ZkpCredDefResDto.builder()
+                .credDef(encodedCredentialDefinition)
                 .build();
     }
 
@@ -92,7 +155,7 @@ public class StorageServiceImpl implements StorageService {
      * @throws OpenDidException if the DID is null, empty, or invalid.
      */
     private void checkValidation(String didKeyUrl) {
-        if(didKeyUrl == null || didKeyUrl.isEmpty()){
+        if (didKeyUrl == null || didKeyUrl.isEmpty()) {
             throw new OpenDidException(ErrorCode.DID_NOT_FOUND);
         }
         if (!DidValidator.isValidDid(didKeyUrl)) {

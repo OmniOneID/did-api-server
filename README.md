@@ -4,6 +4,17 @@ API Gateway Server
 Welcome to the API Gateway Server Repository. <br>
 This repository contains the source code, documentation, and related resources for the API Gateway Server.
 
+## S/W Specifications
+| Category           | Details                                         |
+|--------------------|-------------------------------------------------|
+| OS                 | macOS / Linux / Windows 10 or higher            |
+| Language           | Java 21 or higher                               |
+| IDE                | IntelliJ IDEA                                   |
+| Build System       | Gradle 7.0 or higher                            |
+| Compatibility      | Requires JDK 21 or higher                       |
+| Docker             | Docker and Docker Compose must be installed     |
+| Other Requirements | Minimum 2GB RAM and 10GB of disk space required |
+
 ## Folder Structure
 Overview of the major folders and documents in the project directory:
 
@@ -21,21 +32,25 @@ did-api-server
 ├── SECURITY.md
 ├── docs
 │   └── api
+│       ├── APIGateway_API.md
 │       └── APIGateway_API_ko.md
 │   └── errorCode
-│       └── APIGateway_ErrorCode.md
+│       ├── APIGateway_ErrorCode.md
+│       └── APIGateway_ErrorCode_ko.md
 │   └── installation
-│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       ├── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide_ko.md
 └── source
     └── did-api-server
         ├── gradle
         ├── libs
-            └── did-sdk-common-1.0.0.jar
-            └── did-blockchain-sdk-server-1.0.0.jar
-            └── did-core-sdk-server-1.0.0..jar
-            └── did-crypto-sdk-server-1.0.0.jar
-            └── did-datamodel-sdk-server-1.0.0.jar
-            └── did-wallet-sdk-server-1.0.0.jar
+            └── did-sdk-common-2.0.0.jar
+            └── did-blockchain-sdk-server-2.0.0.jar
+            └── did-core-sdk-server-2.0.0.jar
+            └── did-crypto-sdk-server-2.0.0.jar
+            └── did-datamodel-sdk-server-2.0.0.jar
+            └── did-wallet-sdk-server-2.0.0.jar
+            └── did-zkp-sdk-server-2.0.0.jar
         └── src
         └── build.gradle
         └── README.md
@@ -77,12 +92,13 @@ Libraries used in this project are organized into two main categories:
 
 1. **Open DID Libraries**: These libraries are developed by the Open DID project and are available in the [libs folder](source/did-api-server/libs). They include:
 
-   - `did-sdk-common-1.0.0.jar`
-   - `did-blockchain-sdk-server-1.0.0.jar`
-   - `did-core-sdk-server-1.0.0.jar`
-   - `did-crypto-sdk-server-1.0.0.jar`
-   - `did-datamodel-sdk-server-1.0.0.jar`
-   - `did-wallet-sdk-server-1.0.0.jar`
+   - `did-sdk-common-2.0.0.jar`
+   - `did-blockchain-sdk-server-2.0.0.jar`
+   - `did-core-sdk-server-2.0.0.jar`
+   - `did-crypto-sdk-server-2.0.0.jar`
+   - `did-datamodel-sdk-server-2.0.0.jar`
+   - `did-wallet-sdk-server-2.0.0.jar`
+   - `did-zkp-sdk-server-2.0.0.jar`
 
 2. **Third-Party Libraries**: These libraries are open-source dependencies managed via the [build.gradle](source/did-api-server/build.gradle) file. For a detailed list of third-party libraries and their licenses, please refer to the [dependencies-license.md](dependencies-license.md) file.
 
