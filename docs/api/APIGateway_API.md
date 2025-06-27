@@ -18,19 +18,19 @@ puppeteer:
 API Gateway API
 ==
 
-- 일자: 2025-05-30
-- 버전: v2.0.0
+- Date: 2025-05-30
+- Version: v2.0.0
   
-목차
+Table of Contents
 ---
 <!-- TOC tocDepth:2..3 chapterDepth:2..6 -->
 
-- [1. 개요](#1-개요)
-- [2. 용어 설명](#2-용어-설명)
-- [3. API 목록](#3-api-목록)
-    - [3.1. 순차 API](#31-순차-api)
-    - [3.2. 단일호출 API](#32-단일호출-api)
-- [4. 단일 호출 API](#4-단일-호출-api)
+- [1. Overview](#1-overview)
+- [2. Terminology](#2-terminology)
+- [3. API List](#3-api-list)
+    - [3.1. Sequential API](#31-sequential-api)
+    - [3.2. Single Call API](#32-single-call-api)
+- [4. Single Call API](#4-single-call-api)
     - [4.1. Get DID Document](#41-get-did-document)
     - [4.2. Get VC Metadata](#42-get-vc-metadata)
     - [4.3. Get ZKP Credential Schema](#43-get-zkp-credential-schema)
@@ -39,75 +39,75 @@ API Gateway API
 <!-- /TOC -->
 
 
-## 1. 개요
+## 1. Overview
 
-본 문서는 API Gateway Service가 제공하는 API를 정의한다.
-
-<div style="page-break-after: always; margin-top: 50px;"></div>
-
-## 2. 용어 설명
-- 프로토콜 (Protocol)
-  - 특정 기능을 수행하기 위해 정해진 순서에 따라 호출해야 하는 `순차 API`의 집합이다. API 호출 순서를 엄격히 따라야 하며, 순서가 잘못될 경우 예상하지 못한 결과가 발생할 수 있다.
-- 순차 API (Sequential API)
-  - 특정 기능(프로토콜)을 수행하기 위해 정해진 순서대로 호출하는 일련의 API를 말한다. 각 API는 순차적으로 호출되어야 하며, 순서가 잘못될 경우 제대로 동작하지 않을 수 있다.
-  - 그러나 일부 프로토콜에서는 같은 호출 순서를 가진 API가 존재할 수 있으며, 이 경우 하나의 API를 선택하여 호출할 수 있다.
-- 단일 호출 API (Single Call API)
-  - 일반적인 REST API처럼 순서에 관계없이 독립적으로 호출 가능한 API를 의미한다.
-- 표준 API (Standard API)
-  - API 문서에서 명확하게 정의된 API로, 모든 구현체에서 일관된 방식으로 제공되어야 한다. 표준 API는 시스템 간 상호 운용성을 보장하며, 사전에 정의된 스펙에 따라 동작해야 한다.
-- 비표준 API (Non-Standard API)
-  - 구현체마다 필요에 따라 다르게 정의되거나 커스터마이징될 수 있는 API이다. 본 문서에서 제공하는 비표준 API는 한 가지 예시일 뿐이며, 각 구현체에 맞춰 다르게 구현될 수 있다. 이 경우, 구현체별 별도의 문서화가 필요하다.
-  - 예를 들어, DID Document 조회 기능은 시스템에 따라 구현 방법이 달라질 수 있으며, `get-diddoc` API와 같은 비표준 API는 각 구현체에서 필요한 방식으로 재정의할 수 있다.
+This document defines the APIs provided by the API Gateway Service.
 
 <div style="page-break-after: always; margin-top: 50px;"></div>
 
-## 3. API 목록
+## 2. Terminology
+- Protocol
+  - A set of `Sequential APIs` that must be called in a predetermined order to perform a specific function. The API call sequence must be strictly followed, as incorrect ordering may lead to unexpected results.
+- Sequential API
+  - A series of APIs that are called in a predetermined order to perform a specific function (protocol). Each API must be called sequentially, and incorrect ordering may prevent proper operation.
+  - However, some protocols may have APIs with the same calling sequence, in which case one API can be selected and called.
+- Single Call API
+  - An API that can be called independently regardless of order, like typical REST APIs.
+- Standard API
+  - APIs clearly defined in the API documentation that must be provided consistently across all implementations. Standard APIs ensure interoperability between systems and must operate according to predefined specifications.
+- Non-Standard API
+  - APIs that can be defined or customized differently according to the needs of each implementation. The non-standard APIs provided in this document are just one example and may be implemented differently for each implementation. In this case, separate documentation for each implementation is required.
+  - For example, DID Document retrieval functionality may be implemented differently depending on the system, and non-standard APIs like `get-diddoc` can be redefined as needed by each implementation.
 
-### 3.1. 순차 API
-API Gateway Service는 현재 특정 기능을 수행하기 위한 프로토콜이 정의되어 있지 않으며, 따라서 순차 API도 제공하지 않는다.
+<div style="page-break-after: always; margin-top: 50px;"></div>
+
+## 3. API List
+
+### 3.1. Sequential API
+The API Gateway Service currently has no protocols defined for performing specific functions, and therefore does not provide sequential APIs.
 
 <div style="page-break-after: always; margin-top: 40px;"></div>
 
-### 3.2. 단일호출 API
+### 3.2. Single Call API
 
-| API                 | URL                        | Description                  | 표준API |
-| ------------------- | -------------------------- | ---------------------------- | ------- |
-| `get-diddoc`        | /api/v1/diddoc             | DID Document 조회            | N       |
-| `get-vcmeta`        | /api/v1/vcmeta             | VC 메타데이터 조회           | N       |
-| `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema 조회   | N       |
-| `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition 조회 | N       |
+| API                 | URL                        | Description                        | Standard API |
+| ------------------- | -------------------------- | ---------------------------------- | ----------- |
+| `get-diddoc`        | /api/v1/diddoc             | DID Document retrieval             | N           |
+| `get-vcmeta`        | /api/v1/vcmeta             | VC metadata retrieval              | N           |
+| `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema retrieval    | N           |
+| `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition retrieval| N           |
 
 <div style="page-break-after: always; margin-top: 50px;"></div>
 
-## 4. 단일 호출 API
+## 4. Single Call API
 
-단일 호출 API는 특정 기능을 수행하는 하나의 독립된 API이다.
-따라서 순서대로 호출해야 하는 API의 집단인 순차 API(aka, 프로토콜)이 아니므로 프로토콜 번호가 부여되지 않는다.
-API Gateway Service가 제공하는 단일 호출 API 목록은 아래 표와 같다.
+Single Call APIs are independent APIs that perform a specific function.
+Therefore, they are not Sequential APIs (aka protocols) which are groups of APIs that must be called in order, so no protocol number is assigned.
+The list of Single Call APIs provided by the API Gateway Service is shown in the table below.
 
-| API                 | URL                        | Description                  | 표준API |
-| ------------------- | -------------------------- | ---------------------------- | ------- |
-| `get-diddoc`        | /api/v1/diddoc             | DID Document 조회            | N       |
-| `get-vcmeta`        | /api/v1/vcmeta             | VC 메타데이터 조회           | N       |
-| `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema 조회   | N       |
-| `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition 조회 | N       |
+| API                 | URL                        | Description                        | Standard API |
+| ------------------- | -------------------------- | ---------------------------------- | ----------- |
+| `get-diddoc`        | /api/v1/diddoc             | DID Document retrieval             | N           |
+| `get-vcmeta`        | /api/v1/vcmeta             | VC metadata retrieval              | N           |
+| `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema retrieval    | N           |
+| `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition retrieval| N           |
 
 ■ Authorization
 
-프로토콜에는 '호출자의 호출 권한을 확인'(authorization)하는 API가 포함되어 있다.
-상기 목록의 단일 호출 API는 authroization에 대하여 정의하지 않았으나,
-향후 다음의 방안을 고려하여 추가할 예정이다.
+Protocols include APIs that 'verify the caller's call permission' (authorization).
+The Single Call APIs in the above list do not define authorization,
+but the following approaches are being considered for future addition.
 
-- 1안) 인가앱 사업자가 서명한 `AttestedAppInfo` 정보를 확인한 후 일정기간 사용이 가능한 토큰을 발급
-    - 단일 API 호출 시 헤더에 TAS 발행 토큰을 첨부
-    - 별도의 토큰 관리 API 필요
-- 2안) 인가앱 사업자가 인가앱에 토큰을 발행하고 TAS가 인가앱 사업자에 토큰 검증을 요청
-    - 단일 API 호출 시 헤더에 인가앱 사업자 발행 토큰을 첨부
-    - 인가앱 사업자가 토큰을 발행하고 검증해주는 기능 구현 필요
+- Option 1) Issue a token that can be used for a certain period after verifying the `AttestedAppInfo` information signed by the authorized app provider
+    - Attach TAS-issued token to header when calling single API
+    - Separate token management API required
+- Option 2) Authorized app provider issues token to authorized app and TAS requests token verification from authorized app provider
+    - Attach authorized app provider-issued token to header when calling single API
+    - Authorized app provider needs to implement functionality to issue and verify tokens
 
 ### 4.1. Get DID Document
 
-DID Document를 조회한다.
+Retrieve DID Document.
 
 | Item          | Description      | Remarks |
 | ------------- | ---------------- | ------- |
@@ -139,17 +139,17 @@ N/A
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
-#### 4.1.2. Resposne
+#### 4.1.2. Response
 
 **■ Process**
-1. did로 DID Document 조회
+1. Retrieve DID Document by did
 
 **■ Status 200 - Success**
 
 ```c#
-def object _GetDidDoc: "Get DID Document 응답문"
+def object _GetDidDoc: "Get DID Document response"
 {
-    @spread(DidDoc)  // 데이터 명세서 참고
+    @spread(DidDoc)  // Refer to data specification
 }
 ```
 
@@ -157,14 +157,14 @@ def object _GetDidDoc: "Get DID Document 응답문"
 
 | Code         | Description              |
 | ------------ | ------------------------ |
-| SSRVAGW00300 | 존재하지 않는 DID입니다. |
-| SSRVAGW00301 | 유효하지 않은 DID입니다. |
+| SSRVAGW00300 | DID does not exist. |
+| SSRVAGW00301 | Invalid DID. |
 
 **■ Status 500 - Server error**
 
 | Code         | Description                   |
 | ------------ | ----------------------------- |
-| SSRVAGW00200 | DID 조회에 실패했습니다.      |
+| SSRVAGW00200 | Failed to retrieve DID.      |
 
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
@@ -192,7 +192,7 @@ Content-Type: application/json;charset=utf-8
 
 ### 4.2. Get VC Metadata
 
-VC Metadata를 조회한다.
+Retrieve VC Metadata.
 
 | Item          | Description      | Remarks |
 | ------------- | ---------------- | ------- |
@@ -227,14 +227,14 @@ N/A
 #### 4.2.2. Response
 
 **■ Process**
-1. vcId로 VC Metadata 조회
+1. Retrieve VC Metadata by vcId
 
 **■ Status 200 - Success**
 
 ```c#
-def object _GetVcMEta: "Get VC Metadata 응답문"
+def object _GetVcMEta: "Get VC Metadata response"
 {
-    @spread(VcMeta)  // 데이터 명세서 참고
+    @spread(VcMeta)  // Refer to data specification
 }
 ```
 
@@ -242,14 +242,14 @@ def object _GetVcMEta: "Get VC Metadata 응답문"
 
 | Code         | Description             |
 | ------------ | ----------------------- |
-| SSRVAGW00401 | 존재하지 않는 VC입니다. |
-| SSRVAGW00400 | 유효하지 않은 VC입니다. |
+| SSRVAGW00401 | VC does not exist. |
+| SSRVAGW00400 | Invalid VC. |
 
 **■ Status 500 - Server error**
 
 | Code         | Description                   |
 | ------------ | ----------------------------- |
-| SSRVAGW00201 | VC meta 조회에 실패했습니다.  |
+| SSRVAGW00201 | Failed to retrieve VC meta.  |
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
@@ -277,7 +277,7 @@ Content-Type: application/json;charset=utf-8
 
 ### 4.3. Get ZKP Credential Schema
 
-ZKP Credential Schema를 조회한다.
+Retrieve ZKP Credential Schema.
 
 | Item          | Description                  | Remarks |
 | ------------- | ---------------------------- | ------- |
@@ -312,7 +312,7 @@ N/A
 #### 4.3.2. Response
 
 **■ Process**
-1. ZKP Credential Schema id로 ZKP Credential Schema 조회
+1. Retrieve ZKP Credential Schema by ZKP Credential Schema id
 
 **■ Status 200 - Success**
 
@@ -359,7 +359,7 @@ Content-Type: application/json;charset=utf-8
 
 ### 4.4. Get ZKP Credential Definition
 
-ZKP Credential Definition을 조회한다.
+Retrieve ZKP Credential Definition.
 
 | Item          | Description                     | Remarks |
 | ------------- | ------------------------------- | ------- |
@@ -394,7 +394,7 @@ N/A
 #### 4.4.2. Response
 
 **■ Process**
-1. ZKP credential definition id로 ZKP Credential Definition 조회
+1. Retrieve ZKP Credential Definition by ZKP credential definition id
 
 **■ Status 200 - Success**
 

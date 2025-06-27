@@ -8,6 +8,8 @@ spring:
         - logging
         - spring-docs
         - blockchain
+      lss:
+        - lss
 
 server:
   port: 8093

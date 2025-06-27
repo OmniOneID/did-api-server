@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("!sample")
+@Profile("!sample & !lss")
 public class ContractApiConfig {
     @Bean
     public ContractApi contractApi(BlockchainProperty blockchainProperty) {

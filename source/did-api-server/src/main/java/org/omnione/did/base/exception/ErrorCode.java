@@ -27,6 +27,7 @@ import lombok.Getter;
 public enum ErrorCode {
 
     ENCODING_FAILED("SSRVAGW00100", "Failed to encode data.", 500),
+    DECODING_FAILED("SSRVAGW00101", "Failed to decode data.", 500),
 
     GET_DID_DOC_FAILED("SSRVAGW00200", "Failed to retrieve DID document.", 500),
     VC_META_RETRIEVAL_FAILED("SSRVAGW00201", "Failed to retrieve VC meta.", 500),
