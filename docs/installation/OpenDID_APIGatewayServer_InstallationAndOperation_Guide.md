@@ -516,4 +516,5 @@ For example, add an application.yml file to `${your-config-dir}` and write the n
 The `application.yml` file located in `${your-config-dir}` will take precedence over the default configuration files.
 - For detailed configuration instructions, please refer to [5. Configuration Guide.](#5-configuration-guide)
 
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/unrelease-V1.0.1.0/OepnDID_Installation_Guide-V1.0.1.0.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0.md
+[DID Besu Contract]: https://github.com/OmniOneID/did-besu-contract

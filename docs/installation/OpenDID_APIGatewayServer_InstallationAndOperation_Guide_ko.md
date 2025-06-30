@@ -508,5 +508,5 @@ docker-compose up -d
   - `${your-config-dir}`에 위치한 `application.yml` 파일은 기본 설정 파일보다 우선적으로 적용됩니다.
 - 자세한 설정은 [5. 설정 가이드](#5-설정-가이드)를 참고합니다.
  
-[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/develop/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md
+[Open DID Installation Guide]: https://github.com/OmniOneID/did-release/blob/main/release-V2.0.0.0/OpenDID_Installation_Guide-V2.0.0.0_ko.md
 [DID Besu Contract]: https://github.com/OmniOneID/did-besu-contract
