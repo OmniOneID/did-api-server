@@ -41,7 +41,8 @@ public enum ErrorCode {
     VC_NOT_FOUND("SSRVAGW00401", "Failed to find VC: VC META data not found.", 400),
 
     ZKP_CRED_SCHEMA_NOT_FOUND("SSRVAGW00500", "Failed to find ZKP Credential Schema", 400),
-    ZKP_CRED_DEF_NOT_FOUND("SSRVAGW00501", "Failed to find ZKP Credential Definition", 400);
+    ZKP_CRED_DEF_NOT_FOUND("SSRVAGW00501", "Failed to find ZKP Credential Definition", 400),
+    SERVER_CONFIG_KEY_NOT_FOUND("SSRVAGW21501", "Server configuration key not found.", 400);
 
     private final String code;
     private final String message;

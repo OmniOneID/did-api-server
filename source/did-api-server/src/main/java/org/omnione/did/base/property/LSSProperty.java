@@ -12,4 +12,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "lss")
 public class LSSProperty {
     private String url;
+    private String apiKey;
 }

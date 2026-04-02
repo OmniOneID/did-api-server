@@ -16,6 +16,7 @@
 
 package org.omnione.did.apigateway.v1.api;
 
+import org.omnione.did.apigateway.v1.api.config.RepositoryFeignConfig;
 import org.omnione.did.apigateway.v1.api.dto.ZkpCredDefResDto;
 import org.omnione.did.apigateway.v1.api.dto.ZkpCredSchemaResDto;
 import org.omnione.did.base.constants.UrlConstant;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Feign client for the Storage server.
  * This class was temporarily used instead of the BlockChain service and is no longer in use.
  */
-@FeignClient(value = "Storage", url = "${lss.url:http://127.0.0.1:8098}" + UrlConstant.LSS.V1)
+@FeignClient(value = "Storage", url = "${lss.url:http://127.0.0.1:8098}" + UrlConstant.LSS.V1, configuration = RepositoryFeignConfig.class)
 public interface RepositoryFeign {
 
     /**

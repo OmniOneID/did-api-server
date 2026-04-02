@@ -1,2 +1,3 @@
 lss:
   url: http://127.0.0.1:8098
+  api-key: enter_lss_api_key_here
