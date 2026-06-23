@@ -42,13 +42,21 @@ public class RouterController {
     /**
      * Retrieves a DID document for a given DID.
      *
-     * @param did The Decentralized Identifier (DID) to look up.
+     * <p>The standard DID key URL embeds the version as a query, e.g. {@code did:omn:foo?versionId=2}.
+     * Since the leading {@code ?} collides with HTTP query parsing, {@code versionId} is exposed as a
+     * separate, optional query parameter and recombined here into the standard form before lookup.
+     *
+     * @param did       The Decentralized Identifier (DID) to look up.
+     * @param versionId The optional version of the DID document. When present, it is combined with
+     *                  the DID as {@code <did>?versionId=<versionId>}; when absent, the DID is used alone.
      * @return DidDocResDto containing the DID document.
      */
     @GetMapping(value = UrlConstant.GateWay.DID_DOC)
     @ResponseBody
-    public DidDocResDto getDid(@RequestParam(name = "did") String did) {
-        return storageService.findDidDocument(did);
+    public DidDocResDto getDid(@RequestParam(name = "did") String did,
+                               @RequestParam(name = "versionId", required = false) Long versionId) {
+        String didKeyUrl = (versionId != null) ? did + "?versionId=" + versionId : did;
+        return storageService.findDidDocument(didKeyUrl);
     }
 
     /**

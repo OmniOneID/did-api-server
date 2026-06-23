@@ -30,6 +30,7 @@ import org.omnione.did.base.exception.OpenDidException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.base.util.BaseMultibaseUtil;
+import org.omnione.did.common.util.DidUtil;
 import org.omnione.did.common.util.DidValidator;
 import org.omnione.did.data.model.vc.VcMeta;
 import org.omnione.did.zkp.datamodel.schema.CredentialSchema;
@@ -158,7 +159,10 @@ public class StorageServiceImpl implements StorageService {
         if (didKeyUrl == null || didKeyUrl.isEmpty()) {
             throw new OpenDidException(ErrorCode.DID_NOT_FOUND);
         }
-        if (!DidValidator.isValidDid(didKeyUrl)) {
+        // Validate the DID itself, ignoring any "?versionId=..." query or "#..." fragment,
+        // so versioned lookups such as "did:omn:foo?versionId=2" are accepted.
+        String did = DidUtil.extractDid(didKeyUrl);
+        if (did == null || did.isEmpty() || !DidValidator.isValidDid(did)) {
             throw new OpenDidException(ErrorCode.DID_INVALID);
         }
     }
