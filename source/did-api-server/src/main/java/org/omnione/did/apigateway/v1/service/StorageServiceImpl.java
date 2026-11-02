@@ -29,7 +29,8 @@ import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.omnione.did.base.util.BaseMultibaseUtil;
+import org.omnione.did.common.exception.CommonSdkException;
+import org.omnione.did.common.util.multibase.BaseMultibaseUtil;
 import org.omnione.did.common.util.DidUtil;
 import org.omnione.did.common.util.DidValidator;
 import org.omnione.did.data.model.vc.VcMeta;
@@ -64,7 +65,7 @@ public class StorageServiceImpl implements StorageService {
             checkValidation(did);
             String didDocument = repositoryFeign.getDid(did);
 
-            String encodedDidDoc = BaseMultibaseUtil.encode(didDocument.getBytes(StandardCharsets.UTF_8));
+            String encodedDidDoc = encodeMultibase(didDocument.getBytes(StandardCharsets.UTF_8));
 
             return DidDocResDto.builder()
                     .didDoc(encodedDidDoc)
@@ -97,7 +98,7 @@ public class StorageServiceImpl implements StorageService {
 
         try {
             String vcMetaData = repositoryFeign.getVcMetaData(vcId);
-            String encodedVcMeta = BaseMultibaseUtil.encode(vcMetaData.getBytes(StandardCharsets.UTF_8));
+            String encodedVcMeta = encodeMultibase(vcMetaData.getBytes(StandardCharsets.UTF_8));
 
             return VcMetaResDto.builder()
                     .vcId(vcId)
@@ -125,7 +126,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public ZkpCredSchemaResDto findZkpCredSchema(String id) {
         String credentialSchema = repositoryFeign.getZkpCredSchema(id);
-        String encodedCredentialSchema = BaseMultibaseUtil.encode(credentialSchema.getBytes(StandardCharsets.UTF_8));
+        String encodedCredentialSchema = encodeMultibase(credentialSchema.getBytes(StandardCharsets.UTF_8));
 
         return ZkpCredSchemaResDto.builder()
                 .credSchema(encodedCredentialSchema)
@@ -142,7 +143,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public ZkpCredDefResDto findZkpCredDef(String id) {
         String credentialDefinition = repositoryFeign.getZkpCredDef(id);
-        String encodedCredentialDefinition = BaseMultibaseUtil.encode(credentialDefinition.getBytes(StandardCharsets.UTF_8));
+        String encodedCredentialDefinition = encodeMultibase(credentialDefinition.getBytes(StandardCharsets.UTF_8));
 
         return ZkpCredDefResDto.builder()
                 .credDef(encodedCredentialDefinition)
@@ -164,6 +165,15 @@ public class StorageServiceImpl implements StorageService {
         String did = DidUtil.extractDid(didKeyUrl);
         if (did == null || did.isEmpty() || !DidValidator.isValidDid(did)) {
             throw new OpenDidException(ErrorCode.DID_INVALID);
+        }
+    }
+
+    private static String encodeMultibase(byte[] data) {
+        // Keep the ENCODING_FAILED contract of the removed local BaseMultibaseUtil
+        try {
+            return BaseMultibaseUtil.encode(data);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.ENCODING_FAILED);
         }
     }
 }

@@ -25,7 +25,8 @@ import org.omnione.did.apigateway.v1.dto.ZkpCredSchemaResDto;
 import org.omnione.did.base.exception.ErrorCode;
 import org.omnione.did.base.exception.OpenDidException;
 import org.omnione.did.base.property.BlockchainProperty;
-import org.omnione.did.base.util.BaseMultibaseUtil;
+import org.omnione.did.common.exception.CommonSdkException;
+import org.omnione.did.common.util.multibase.BaseMultibaseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.omnione.did.common.util.DidValidator;
@@ -72,7 +73,7 @@ public class BlockchainServiceImpl implements StorageService {
                 throw new OpenDidException(ErrorCode.DID_NOT_FOUND);
             }
 
-            String encodedDidDoc = BaseMultibaseUtil.encode(didDocAndStatus.getDocument()
+            String encodedDidDoc = encodeMultibase(didDocAndStatus.getDocument()
                     .toJson().getBytes(StandardCharsets.UTF_8));
 
             return DidDocResDto.builder()
@@ -102,7 +103,7 @@ public class BlockchainServiceImpl implements StorageService {
             if (vcMeta == null)  {
                 throw new OpenDidException(ErrorCode.VC_NOT_FOUND);
             }
-            String encodedVcMeta = BaseMultibaseUtil.encode(vcMeta.toJson().getBytes(StandardCharsets.UTF_8));
+            String encodedVcMeta = encodeMultibase(vcMeta.toJson().getBytes(StandardCharsets.UTF_8));
 
             return VcMetaResDto.builder()
                     .vcId(vcId)
@@ -130,7 +131,7 @@ public class BlockchainServiceImpl implements StorageService {
                 throw new OpenDidException(ErrorCode.ZKP_CRED_SCHEMA_NOT_FOUND);
             }
 
-            String encodedCredSchema = BaseMultibaseUtil.encode(credSchema.toJson().getBytes(StandardCharsets.UTF_8));
+            String encodedCredSchema = encodeMultibase(credSchema.toJson().getBytes(StandardCharsets.UTF_8));
 
             return ZkpCredSchemaResDto.builder()
                     .credSchema(encodedCredSchema)
@@ -160,7 +161,7 @@ public class BlockchainServiceImpl implements StorageService {
                 throw new OpenDidException(ErrorCode.ZKP_CRED_DEF_NOT_FOUND);
             }
 
-            String encodedDredDef = BaseMultibaseUtil.encode(credDef.toJson().getBytes(StandardCharsets.UTF_8));
+            String encodedDredDef = encodeMultibase(credDef.toJson().getBytes(StandardCharsets.UTF_8));
 
             return ZkpCredDefResDto.builder()
                 .credDef(encodedDredDef)
@@ -187,6 +188,15 @@ public class BlockchainServiceImpl implements StorageService {
         }
         if (!DidValidator.isValidDid(did)) {
             throw new OpenDidException(ErrorCode.DID_INVALID);
+        }
+    }
+
+    private static String encodeMultibase(byte[] data) {
+        // Keep the ENCODING_FAILED contract of the removed local BaseMultibaseUtil
+        try {
+            return BaseMultibaseUtil.encode(data);
+        } catch (CommonSdkException e) {
+            throw new OpenDidException(ErrorCode.ENCODING_FAILED);
         }
     }
 }
