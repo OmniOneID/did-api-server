@@ -18,8 +18,13 @@ puppeteer:
 API Gateway API
 ==
 
-- 일자: 2025-05-30
-- 버전: v2.0.0
+- 일자: 2026-11-03
+- 버전: v3.0.0
+
+| 버전   | 일자       | 변경 내용 |
+| ------ | ---------- | --------- |
+| v2.0.0 | 2025-05-30 | ZKP Credential Schema·Credential Definition API 추가 |
+| v3.0.0 | 2026-11-03 | [4.1] 선택 파라미터 `versionId` 추가, API 경로와 예시 수정 |
   
 목차
 ---
@@ -72,8 +77,8 @@ API Gateway Service는 현재 특정 기능을 수행하기 위한 프로토콜�
 
 | API                 | URL                        | Description                  | 표준API |
 | ------------------- | -------------------------- | ---------------------------- | ------- |
-| `get-diddoc`        | /api/v1/diddoc             | DID Document 조회            | N       |
-| `get-vcmeta`        | /api/v1/vcmeta             | VC 메타데이터 조회           | N       |
+| `get-diddoc`        | /api/v1/did-doc            | DID Document 조회            | N       |
+| `get-vcmeta`        | /api/v1/vc-meta            | VC 메타데이터 조회           | N       |
 | `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema 조회   | N       |
 | `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition 조회 | N       |
 
@@ -87,8 +92,8 @@ API Gateway Service가 제공하는 단일 호출 API 목록은 아래 표와 �
 
 | API                 | URL                        | Description                  | 표준API |
 | ------------------- | -------------------------- | ---------------------------- | ------- |
-| `get-diddoc`        | /api/v1/diddoc             | DID Document 조회            | N       |
-| `get-vcmeta`        | /api/v1/vcmeta             | VC 메타데이터 조회           | N       |
+| `get-diddoc`        | /api/v1/did-doc            | DID Document 조회            | N       |
+| `get-vcmeta`        | /api/v1/vc-meta            | VC 메타데이터 조회           | N       |
 | `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema 조회   | N       |
 | `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition 조회 | N       |
 
@@ -112,7 +117,7 @@ DID Document를 조회한다.
 | Item          | Description      | Remarks |
 | ------------- | ---------------- | ------- |
 | Method        | `GET`           |         |
-| Path          | `/api/v1/diddoc` |         |
+| Path          | `/api/v1/did-doc` |         |
 | Authorization | -                |         |
 
 #### 4.1.1. Request
@@ -132,6 +137,7 @@ N/A
 | name    | Description | Remarks |
 | ------- | ----------- | ------- |
 | + `did` | `did`       |         |
+| - `versionId` | DID Document 버전. 생략하면 최신 버전을 돌려준다. | v3.0.0에서 추가 |
 
 **■ HTTP Body**
 
@@ -174,7 +180,7 @@ def object _GetDidDoc: "Get DID Document 응답문"
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/diddoc?did=did%3Aomn%3Atas'"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/did-doc?did=did%3Aomn%3Atas"
 ```
 
 **■ Response**
@@ -197,7 +203,7 @@ VC Metadata를 조회한다.
 | Item          | Description      | Remarks |
 | ------------- | ---------------- | ------- |
 | Method        | `GET`            |         |
-| Path          | `/api/v1/vcmeta` |         |
+| Path          | `/api/v1/vc-meta` |         |
 | Authorization | -                |         |
 
 #### 4.2.1. Request
@@ -258,7 +264,7 @@ def object _GetVcMEta: "Get VC Metadata 응답문"
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/vc-meta?vcId=c184fb29-e6e1-4144-bae0-ccc44a3770df"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/vc-meta?vcId=c184fb29-e6e1-4144-bae0-ccc44a3770df"
 ```
 
 **■ Response**
@@ -341,7 +347,7 @@ N/A
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/zkp-cred-schema?id=schema-123"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/zkp-cred-schema?id=schema-123"
 ```
 
 **■ Response**
@@ -423,7 +429,7 @@ N/A
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/zkp-cred-def?id=def-456"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/zkp-cred-def?id=def-456"
 ```
 
 **■ Response**

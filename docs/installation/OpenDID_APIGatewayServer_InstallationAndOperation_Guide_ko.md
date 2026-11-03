@@ -18,8 +18,8 @@ puppeteer:
 Open DID API Gateway Server Installation And Operation Guide
 ==
 
-- Date: 2025-05-30
-- Version: v2.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 목차
 ==
@@ -54,10 +54,14 @@ Open DID API Gateway Server Installation And Operation Guide
     - [5.2.1. 로깅 설정](#521-로깅-설정)
   - [5.3. blockchain.properties](#53-blockchainproperties)
     - [5.3.1. 블록체인 연동 설정](#531-블록체인-연동-설정)
+  - [5.4. application-blockchain.yml](#54-application-blockchainyml)
+  - [5.5. application-lss.yml](#55-application-lssyml)
+  - [5.6. application-spring-docs.yml](#56-application-spring-docsyml)
 - [6. 프로파일 설정 및 사용](#6-프로파일-설정-및-사용)
-  - [6.1. 프로파일 개요 (`sample`, `dev`)](#61-프로파일-개요-sample-dev)
+  - [6.1. 프로파일 개요 (`sample`, `dev`, `lss`)](#61-프로파일-개요-sample-dev-lss)
     - [6.1.1. `sample` 프로파일](#611-sample-프로파일)
     - [6.1.2. `dev` 프로파일](#612-dev-프로파일)
+    - [6.1.3. `lss` 프로파일](#613-lss-프로파일)
   - [6.2. 프로파일 설정 방법](#62-프로파일-설정-방법)
     - [6.2.1. IDE를 사용한 서버 구동 시](#621-ide를-사용한-서버-구동-시)
     - [6.2.2. 콘솔 명령어를 사용한 서버 구동 시](#622-콘솔-명령어를-사용한-서버-구동-시)
@@ -144,31 +148,36 @@ did-api-server
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── dependencies-license.md
+├── LICENSE
 ├── MAINTAINERS.md
 ├── README.md
+├── README_ko.md
 ├── RELEASE-PROCESS.md
 ├── SECURITY.md
 ├── docs
-│   ├── api
-│       └── APIGateway_Reference_Implementation_API.md
-│   ├── errorCode
-│       └── APIGateway_ErrorCode.md
-│   └── installation
-│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│   ├── api
+│   │   ├── APIGateway_API.md
+│   │   └── APIGateway_API_ko.md
+│   ├── errorCode
+│   │   ├── APIGateway_ErrorCode.md
+│   │   └── APIGateway_ErrorCode_ko.md
+│   └── installation
+│       ├── OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md
+│       └── OpenDID_APIGatewayServer_InstallationAndOperation_Guide_ko.md
 └── source
-    └── apigateway
+    └── did-api-server
+        ├── README.md
+        ├── build.gradle
         ├── gradle
         ├── libs
-            └── did-sdk-common-2.0.0.jar
-            └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0.jar
-            └── did-crypto-sdk-server-2.0.0.jar
-            └── did-datamodel-server-2.0.0.jar
-            └── did-wallet-sdk-server-2.0.0.jar
-            └── did-zkp-sdk-server-2.0.0.jar
+        │   ├── did-blockchain-sdk-server-2.0.0.jar
+        │   ├── did-common-sdk-server-3.0.0.jar
+        │   ├── did-core-sdk-server-2.0.0.jar
+        │   ├── did-crypto-sdk-server-2.0.0.jar
+        │   ├── did-datamodel-sdk-server-2.0.0.jar
+        │   ├── did-wallet-sdk-server-2.0.0.jar
+        │   └── did-zkp-sdk-server-2.0.0.jar
         └── src
-        └── build.gradle
-        └── README.md
 ```
 
 | Name                    | Description                              |
@@ -270,7 +279,7 @@ IntelliJ IDEA는 Java 개발에 널리 사용되는 통합 개발 환경(IDE)으
       cd build/libs
       ls
     ```
-- 이 명령어는 `did-api-server-2.0.0.jar` 파일을 생성합니다.
+- 이 명령어는 `did-api-server-3.0.0.jar` 파일을 생성합니다.
 
 <br/>
 
@@ -278,7 +287,7 @@ IntelliJ IDEA는 Java 개발에 널리 사용되는 통합 개발 환경(IDE)으
 빌드된 JAR 파일을 사용하여 서버를 구동합니다:
 
 ```bash
-java -jar did-api-server-2.0.0.jar
+java -jar did-api-server-3.0.0.jar
 ```
 
 > **주의**
@@ -377,23 +386,23 @@ Jackson은 Spring Boot에서 기본적으로 사용되는 JSON 직렬화/역직�
 #### EVM Network Configuration
 
 - `evm.network.url:`:
-  - EVM Network 주소, 클라이언트와 동일한 로컬에 Besu를 구동하는 경우 해당 값은 고정 사용합니다. (Defalt Port : 8545)
+  - EVM Network 주소, 클라이언트와 동일한 로컬에 Besu를 구동하는 경우 해당 값은 고정 사용합니다. (Default Port : 8545)
   - 예시: http://localhost:8545
 
 - `evm.chainId:`:
-  - Chain ID 식별자입니다. 현재는 1337의 고정값을 사용중입니다.(Defalt Value : 1337)
+  - Chain ID 식별자입니다. 현재는 1337의 고정값을 사용중입니다.(Default Value : 1337)
   - 예시: 1337
 
 - `evm.gas.limit:`:
-  - Hyperledger Besu EVM 트랜잭션에서 최대로 허용되는 가스 한도, 현재는 Free Gas로서 고정으로 사용합니다. (Defalt Value : 100000000)
+  - Hyperledger Besu EVM 트랜잭션에서 최대로 허용되는 가스 한도, 현재는 Free Gas로서 고정으로 사용합니다. (Default Value : 100000000)
   - 예시: 100000000
 
 - `evm.gas.price :`:
-  - 유닛 단위 가스 가격, 현재는 Free Gas로서 0으로  고정으로 사용합니다.(Defalt Value : 0)
+  - 유닛 단위 가스 가격, 현재는 Free Gas로서 0으로  고정으로 사용합니다.(Default Value : 0)
   - 예시: 0
 
 - `evm.connection.timeout:`: 
-  - 네트워크 커넥션 타임아웃 값(milliseconds), 현재는 권장 값인 10000으로 고정 사용합니다. (Defalt Value : 10000)
+  - 네트워크 커넥션 타임아웃 값(milliseconds), 현재는 권장 값인 10000으로 고정 사용합니다. (Default Value : 10000)
   - 예시: 10000
 
 #### EVM Contract Configuration
@@ -409,9 +418,79 @@ Jackson은 Spring Boot에서 기본적으로 사용되는 JSON 직렬화/역직�
 <br/>
 
 
+## 5.4. application-blockchain.yml
+- 역할: 블록체인 설정 파일의 위치를 지정합니다.
+
+- 위치: `src/main/resources/config`
+
+* `blockchain.file-path`:
+    - [5.3. blockchain.properties](#53-blockchainproperties) 파일의 위치를 설정합니다.
+    - 예시: `/path/to/your/blockchain.properties`
+
+<br/>
+
+## 5.5. application-lss.yml
+- 역할: LSS(Ledger Service Server) 연동을 설정합니다. `lss` 프로파일을 켜면 API Gateway는 블록체인 대신 LSS에서 DID Document, VC 메타데이터, ZKP 데이터를 조회합니다.
+
+- 위치: `src/main/resources/config`
+
+* `lss.url`:
+    - LSS 서버 주소입니다.
+    - 예시: `http://127.0.0.1:8098`
+
+* `lss.api-key`:
+    - LSS에서 발급한 API Key입니다. API Gateway는 데이터베이스가 없으므로 여기에 설정하며, `X-API-Key` 헤더로 보냅니다.
+    - 예시: `your_lss_api_key`
+
+<br/>
+
+## 5.6. application-spring-docs.yml
+
+- 역할: 애플리케이션에서 SpringDoc 및 Swagger UI 설정을 관리합니다.
+
+- 위치: `src/main/resources/`
+
+* `springdoc.swagger-ui.path`: 🔒
+  - Swagger UI에 접근할 수 있는 URL 경로를 정의합니다.
+  - 예시: `/swagger-ui.html`
+
+* `springdoc.swagger-ui.groups-order`: 🔒
+  - Swagger UI에서 API 그룹을 표시하는 순서를 지정합니다.
+  - 예시: `ASC`
+
+* `springdoc.swagger-ui.operations-sorter`: 🔒
+  - Swagger UI에서 HTTP 메서드 기준으로 API 엔드포인트를 정렬합니다.
+  - 예시: `method`
+
+* `springdoc.swagger-ui.disable-swagger-default-url`: 🔒
+  - 기본 Swagger URL을 비활성화합니다.
+  - 예시: `true`
+
+* `springdoc.swagger-ui.display-request-duration`: 🔒
+  - Swagger UI에 요청 시간을 표시할지 여부를 설정합니다.
+  - 예시: `true`
+
+* `springdoc.api-docs.path`: 🔒
+  - API 문서가 제공되는 경로를 정의합니다.
+  - 예시: `/api-docs`
+
+* `springdoc.show-actuator`: 🔒
+  - API 문서에서 Actuator 엔드포인트를 표시할지 여부를 설정합니다.
+  - 예시: `true`
+
+* `springdoc.default-consumes-media-type`: 🔒
+  - API 문서에서 요청 본문의 기본 미디어 타입을 설정합니다.
+  - 예시: `application/json`
+
+* `springdoc.default-produces-media-type`: 🔒
+  - API 문서에서 응답 본문의 기본 미디어 타입을 설정합니다.
+  - 예시: `application/json`
+
+<br/>
+
 # 6. 프로파일 설정 및 사용
 
-## 6.1. 프로파일 개요 (`sample`, `dev`)
+## 6.1. 프로파일 개요 (`sample`, `dev`, `lss`)
 API Gateway 서버는 다양한 환경에서 실행될 수 있도록 `sample`, `dev` 두 가지 프로파일을 지원합니다.
 
 각 프로파일은 해당 환경에 맞는 설정을 적용하도록 설계되었습니다. 기본적으로 API Gateway 서버는 `sample` 프로파일로 설정되어 있으며, 이 프로파일은 데이터베이스나 블록체인과 같은 외부 서비스와의 연동 없이 서버를 독립적으로 구동할 수 있도록 설계되었습니다. `sample` 프로파일은 API 호출 테스트에 적합하여, 개발자가 애플리케이션의 기본 동작을 빠르게 확인할 수 있도록 지원합니다. 이 프로파일은 모든 API 호출에 대해 고정된 응답 데이터를 반환하므로, 초기 개발환경에서 유용합니다.
@@ -427,6 +506,9 @@ API Gateway 서버는 다양한 환경에서 실행될 수 있도록 `sample`, `
 `dev` 프로파일은 개발 환경에 적합한 설정을 포함하며, 개발 서버에서 사용됩니다. 이 프로파일을 사용하려면 개발 환경의 데이터베이스와 블록체인 노드에 대한 설정이 필요합니다.
 
 
+### 6.1.3. `lss` 프로파일
+`lss` 프로파일은 `dev`와 함께 사용합니다(예: `dev,lss`). API Gateway가 블록체인 대신 LSS에서 데이터를 조회하므로 블록체인 설정이 필요 없습니다. `lss.url`과 `lss.api-key`(5.5)를 설정하세요.
+
 ## 6.2. 프로파일 설정 방법
 각 구동 방법별로 프로파일을 변경하는 방법을 설명합니다.
 
@@ -440,7 +522,7 @@ API Gateway 서버는 다양한 환경에서 실행될 수 있도록 `sample`, `
 - **프로파일 지정:** 서버 구동 명령어에 `--spring.profiles.active={profile}` 옵션을 추가하여 원하는 프로파일을 활성화합니다.
   
   ```bash
-  java -jar build/libs/did-api-server-2.0.0.jar --spring.profiles.active={profile}
+  java -jar build/libs/did-api-server-3.0.0.jar --spring.profiles.active={profile}
   ```
 
 - **설정 적용:** 활성화된 프로파일에 따라 해당 설정 파일이 적용됩니다.

@@ -44,12 +44,12 @@ did-api-server
     └── did-api-server
         ├── gradle
         ├── libs
-            └── did-sdk-common-2.0.0.jar
-            └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0.jar
-            └── did-crypto-sdk-server-2.0.0.jar
-            └── did-datamodel-sdk-server-2.0.0.jar
-            └── did-wallet-sdk-server-2.0.0.jar
+            ├── did-blockchain-sdk-server-2.0.0.jar
+            ├── did-common-sdk-server-3.0.0.jar
+            ├── did-core-sdk-server-2.0.0.jar
+            ├── did-crypto-sdk-server-2.0.0.jar
+            ├── did-datamodel-sdk-server-2.0.0.jar
+            ├── did-wallet-sdk-server-2.0.0.jar
             └── did-zkp-sdk-server-2.0.0.jar
         └── src
         └── build.gradle
@@ -92,8 +92,8 @@ Libraries used in this project are organized into two main categories:
 
 1. **Open DID Libraries**: These libraries are developed by the Open DID project and are available in the [libs folder](source/did-api-server/libs). They include:
 
-   - `did-sdk-common-2.0.0.jar`
    - `did-blockchain-sdk-server-2.0.0.jar`
+   - `did-common-sdk-server-3.0.0.jar`
    - `did-core-sdk-server-2.0.0.jar`
    - `did-crypto-sdk-server-2.0.0.jar`
    - `did-datamodel-sdk-server-2.0.0.jar`
@@ -110,7 +110,7 @@ For detailed instructions on installing and configuring the API Gateway Server, 
 ## API Reference
 
 - **API Gateway API**: Detailed reference for the TAS Server's API endpoints and usage.
-  - [API Gateway Reference](docs/api/APIGateway_API_ko.md)
+  - [API Gateway Reference](docs/api/APIGateway_API.md)
 
 ## Change Log
 

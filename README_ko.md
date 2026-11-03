@@ -44,12 +44,12 @@ did-api-server
     └── did-api-server
         ├── gradle
         ├── libs
-            └── did-sdk-common-2.0.0.jar
-            └── did-blockchain-sdk-server-2.0.0.jar
-            └── did-core-sdk-server-2.0.0..jar
-            └── did-crypto-sdk-server-2.0.0.jar
-            └── did-datamodel-sdk-server-2.0.0.jar
-            └── did-wallet-sdk-server-2.0.0.jar
+            ├── did-blockchain-sdk-server-2.0.0.jar
+            ├── did-common-sdk-server-3.0.0.jar
+            ├── did-core-sdk-server-2.0.0.jar
+            ├── did-crypto-sdk-server-2.0.0.jar
+            ├── did-datamodel-sdk-server-2.0.0.jar
+            ├── did-wallet-sdk-server-2.0.0.jar
             └── did-zkp-sdk-server-2.0.0.jar
         └── src
         └── build.gradle
@@ -92,8 +92,8 @@ did-api-server
 
 1. **Open DID 라이브러리**: Open DID 프로젝트에서 개발된 라이브러리로, [libs 폴더](source/did-api-server/libs)에 포함되어 있습니다. 주요 라이브러리는 다음과 같습니다:
 
-   - `did-sdk-common-2.0.0.jar`
    - `did-blockchain-sdk-server-2.0.0.jar`
+   - `did-common-sdk-server-3.0.0.jar`
    - `did-core-sdk-server-2.0.0.jar`
    - `did-crypto-sdk-server-2.0.0.jar`
    - `did-datamodel-sdk-server-2.0.0.jar`
@@ -105,7 +105,7 @@ did-api-server
 ## 설치 및 운영 가이드
 
 API Gateway 서버의 설치 및 구성에 대한 자세한 지침은 아래 가이드를 참조하십시오:
-- [penDID API Gateway 서버 설치 및 운영 가이드](docs/installation/OpenDID_APIGatewayServer_InstallationAndOperation_Guide.md)  
+- [OpenDID API Gateway 서버 설치 및 운영 가이드](docs/installation/OpenDID_APIGatewayServer_InstallationAndOperation_Guide_ko.md)  
 
 ## API 참고 문서
 

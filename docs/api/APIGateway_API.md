@@ -18,8 +18,13 @@ puppeteer:
 API Gateway API
 ==
 
-- Date: 2025-05-30
-- Version: v2.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
+
+| Version | Date       | Changes |
+| ------- | ---------- | ------- |
+| v2.0.0  | 2025-05-30 | Added ZKP Credential Schema and Credential Definition APIs |
+| v3.0.0  | 2026-11-03 | [4.1] Added the optional `versionId` parameter; corrected API paths and examples |
   
 Table of Contents
 ---
@@ -72,8 +77,8 @@ The API Gateway Service currently has no protocols defined for performing specif
 
 | API                 | URL                        | Description                        | Standard API |
 | ------------------- | -------------------------- | ---------------------------------- | ----------- |
-| `get-diddoc`        | /api/v1/diddoc             | DID Document retrieval             | N           |
-| `get-vcmeta`        | /api/v1/vcmeta             | VC metadata retrieval              | N           |
+| `get-diddoc`        | /api/v1/did-doc            | DID Document retrieval             | N           |
+| `get-vcmeta`        | /api/v1/vc-meta            | VC metadata retrieval              | N           |
 | `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema retrieval    | N           |
 | `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition retrieval| N           |
 
@@ -87,8 +92,8 @@ The list of Single Call APIs provided by the API Gateway Service is shown in the
 
 | API                 | URL                        | Description                        | Standard API |
 | ------------------- | -------------------------- | ---------------------------------- | ----------- |
-| `get-diddoc`        | /api/v1/diddoc             | DID Document retrieval             | N           |
-| `get-vcmeta`        | /api/v1/vcmeta             | VC metadata retrieval              | N           |
+| `get-diddoc`        | /api/v1/did-doc            | DID Document retrieval             | N           |
+| `get-vcmeta`        | /api/v1/vc-meta            | VC metadata retrieval              | N           |
 | `get-zkp-credschema` | /api/v1/zkp-cred-schema    | ZKP Credential Schema retrieval    | N           |
 | `get-zkp-creddef`   | /api/v1/zkp-cred-def       | ZKP Credential Definition retrieval| N           |
 
@@ -112,7 +117,7 @@ Retrieve DID Document.
 | Item          | Description      | Remarks |
 | ------------- | ---------------- | ------- |
 | Method        | `GET`           |         |
-| Path          | `/api/v1/diddoc` |         |
+| Path          | `/api/v1/did-doc` |         |
 | Authorization | -                |         |
 
 #### 4.1.1. Request
@@ -132,6 +137,7 @@ N/A
 | name    | Description | Remarks |
 | ------- | ----------- | ------- |
 | + `did` | `did`       |         |
+| - `versionId` | DID Document version. If omitted, the latest version is returned. | Added in v3.0.0 |
 
 **■ HTTP Body**
 
@@ -174,7 +180,7 @@ def object _GetDidDoc: "Get DID Document response"
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/diddoc?did=did%3Aomn%3Atas'"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/did-doc?did=did%3Aomn%3Atas"
 ```
 
 **■ Response**
@@ -197,7 +203,7 @@ Retrieve VC Metadata.
 | Item          | Description      | Remarks |
 | ------------- | ---------------- | ------- |
 | Method        | `GET`            |         |
-| Path          | `/api/v1/vcmeta` |         |
+| Path          | `/api/v1/vc-meta` |         |
 | Authorization | -                |         |
 
 #### 4.2.1. Request
@@ -258,7 +264,7 @@ def object _GetVcMEta: "Get VC Metadata response"
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/vc-meta?vcId=c184fb29-e6e1-4144-bae0-ccc44a3770df"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/vc-meta?vcId=c184fb29-e6e1-4144-bae0-ccc44a3770df"
 ```
 
 **■ Response**
@@ -341,7 +347,7 @@ N/A
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/zkp-cred-schema?id=schema-123"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/zkp-cred-schema?id=schema-123"
 ```
 
 **■ Response**
@@ -423,7 +429,7 @@ N/A
 **■ Request**
 
 ```shell
-curl -v -X GET "http://${Host}:${Port}/api/v1/zkp-cred-def?id=def-456"
+curl -v -X GET "http://${Host}:${Port}/api-gateway/api/v1/zkp-cred-def?id=def-456"
 ```
 
 **■ Response**

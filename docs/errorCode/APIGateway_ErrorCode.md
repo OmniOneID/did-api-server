@@ -18,11 +18,12 @@ fullPage: false
 
 # API Gateway Server Error
 
-- Date: 2025-05-30
-- Version: v2.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 | Version | Date       | Changes                      |
 |---------|------------|------------------------------|
+| v3.0.0  | 2026-11-03 | Added decoding and server configuration error codes |
 | v2.0.0  | 2025-05-30 | Added ZKP-related error codes |
 | v1.0.0  | 2024-09-03 | Initial version              |
 
@@ -37,6 +38,7 @@ fullPage: false
   - [3. DID Related Errors (003xx)](#3-did-related-errors-003xx)
   - [4. VC Related Errors (004xx)](#4-vc-related-errors-004xx)
   - [5. ZKP Related Errors (005xx)](#5-zkp-related-errors-005xx)
+  - [6. Server Configuration Errors (215xx)](#6-server-configuration-errors-215xx)
 
 # Model
 
@@ -71,6 +73,7 @@ public class ErrorResponse {
 | Error Code       | Error Message              | Description | Action Required                        | HTTP Status |
 |------------------|----------------------------|-------------|----------------------------------------|-------------|
 | SSRVAGW00100     | Failed to encode data.     | -           | Check encoding process and input data. | 500         |
+| SSRVAGW00101     | Failed to decode data. | - | Check the encoded data and the decoding method. | 500 |
 
 ## 2. Document Retrieval Errors (002xx)
 
@@ -101,3 +104,9 @@ public class ErrorResponse {
 |------------------|----------------------------------------------|-------------|---------------------------------------------|-------------|
 | SSRVAGW00500     | Failed to find ZKP Credential Schema.        | -           | Confirm ZKP Credential Schema exists.       | 400         |
 | SSRVAGW00501     | Failed to find ZKP Credential Definition.    | -           | Ensure ZKP Credential Definition is present.| 400         |
+
+## 6. Server Configuration Errors (215xx)
+
+| Error Code       | Error Message | Description | Action Required | HTTP Status |
+|------------------|---------------|-------------|-----------------|-------------|
+| SSRVAGW21501     | Server configuration key not found. | - | Check `lss.api-key` in `application-lss.yml`. | 400 |

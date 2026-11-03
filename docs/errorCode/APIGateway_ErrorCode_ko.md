@@ -17,11 +17,12 @@ fullPage: false
 
 # API Gateway Server Error
 
-- Date: 2025-05-30
-- Version: v2.0.0
+- Date: 2026-11-03
+- Version: v3.0.0
 
 | Version | Date       | Changes                      |
 |---------|------------|------------------------------|
+| v3.0.0  | 2026-11-03 | 디코딩·서버 설정 에러 추가 |
 | v2.0.0  | 2025-05-30 | ZKP 관련 에러 코드 추가 |
 | v1.0.0  | 2024-09-03 | 최초 버전              |
 
@@ -36,6 +37,7 @@ fullPage: false
   - [3. DID Related Errors (003xx)](#3-did-related-errors-003xx)
   - [4. VC Related Errors (004xx)](#4-vc-related-errors-004xx)
   - [5. ZKP Related Errors (005xx)](#5-zkp-related-errors-005xx)
+  - [6. Server Configuration Errors (215xx)](#6-server-configuration-errors-215xx)
 
 # Model
 
@@ -70,6 +72,7 @@ public class ErrorResponse {
 | Error Code       | Error Message              | Description | Action Required                        | HTTP Status |
 |------------------|----------------------------|-------------|----------------------------------------|-------------|
 | SSRVAGW00100     | Failed to encode data.     | -           | 인코딩 프로세스와 입력 데이터를 확인하세요. | 500         |
+| SSRVAGW00101     | Failed to decode data. | - | 디코딩할 데이터와 인코딩 방식을 확인하세요. | 500 |
 
 ## 2. Document Retrieval Errors (002xx)
 
@@ -100,3 +103,9 @@ public class ErrorResponse {
 |------------------|----------------------------------------------|-------------|---------------------------------------------|-------------|
 | SSRVAGW00500     | Failed to find ZKP Credential Schema.        | -           | ZKP Credential Schema가 존재하는지 확인하세요.       | 400         |
 | SSRVAGW00501     | Failed to find ZKP Credential Definition.    | -           | ZKP Credential Definition이 있는지 확인하세요.| 400         |
+
+## 6. Server Configuration Errors (215xx)
+
+| Error Code       | Error Message | Description | Action Required | HTTP Status |
+|------------------|---------------|-------------|-----------------|-------------|
+| SSRVAGW21501     | Server configuration key not found. | - | `application-lss.yml`의 `lss.api-key`를 확인하세요. | 400 |
