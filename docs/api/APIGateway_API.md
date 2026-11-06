@@ -18,13 +18,13 @@ puppeteer:
 API Gateway API
 ==
 
-- Date: 2026-11-03
+- Date: 2026-11-06
 - Version: v3.0.0
 
 | Version | Date       | Changes |
 | ------- | ---------- | ------- |
 | v2.0.0  | 2025-05-30 | Added ZKP Credential Schema and Credential Definition APIs |
-| v3.0.0  | 2026-11-03 | [4.1] Added the optional `versionId` parameter; corrected API paths and examples |
+| v3.0.0  | 2026-11-06 | [4.1] Added the optional `versionId` parameter; corrected API paths and examples, corrected the response format |
   
 Table of Contents
 ---
@@ -155,7 +155,7 @@ N/A
 ```c#
 def object _GetDidDoc: "Get DID Document response"
 {
-    @spread(DidDoc)  // Refer to data specification
+    + multibase "didDoc": "encoded DID Document"
 }
 ```
 
@@ -240,7 +240,8 @@ N/A
 ```c#
 def object _GetVcMEta: "Get VC Metadata response"
 {
-    @spread(VcMeta)  // Refer to data specification
+    + string    "vcId"  : "VC id"
+    + multibase "vcMeta": "encoded VC Metadata"
 }
 ```
 

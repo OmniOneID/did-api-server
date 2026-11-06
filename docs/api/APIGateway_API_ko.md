@@ -18,13 +18,13 @@ puppeteer:
 API Gateway API
 ==
 
-- 일자: 2026-11-03
+- 일자: 2026-11-06
 - 버전: v3.0.0
 
 | 버전   | 일자       | 변경 내용 |
 | ------ | ---------- | --------- |
 | v2.0.0 | 2025-05-30 | ZKP Credential Schema·Credential Definition API 추가 |
-| v3.0.0 | 2026-11-03 | [4.1] 선택 파라미터 `versionId` 추가, API 경로와 예시 수정 |
+| v3.0.0 | 2026-11-06 | [4.1] 선택 파라미터 `versionId` 추가, API 경로와 예시 수정, 응답 형식 정정 |
   
 목차
 ---
@@ -145,7 +145,7 @@ N/A
 
 <div style="page-break-after: always; margin-top: 30px;"></div>
 
-#### 4.1.2. Resposne
+#### 4.1.2. Response
 
 **■ Process**
 1. did로 DID Document 조회
@@ -155,7 +155,7 @@ N/A
 ```c#
 def object _GetDidDoc: "Get DID Document 응답문"
 {
-    @spread(DidDoc)  // 데이터 명세서 참고
+    + multibase "didDoc": "인코딩된 DID Document"
 }
 ```
 
@@ -240,7 +240,8 @@ N/A
 ```c#
 def object _GetVcMEta: "Get VC Metadata 응답문"
 {
-    @spread(VcMeta)  // 데이터 명세서 참고
+    + string    "vcId"  : "VC 아이디"
+    + multibase "vcMeta": "인코딩된 VC Metadata"
 }
 ```
 
